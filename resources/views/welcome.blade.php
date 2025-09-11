@@ -10,9 +10,14 @@
 
   <style>
     #map {
-      height: 400px;
-      width: 900px;
+        height: 400px;
+        width: 900px;
     }
+
+    .leaflet-control-attribution {
+        display: none;
+    }
+
   </style>
 </head>
 <body>
@@ -22,7 +27,6 @@
     var map = L.map('map').setView([-9.648759267219418, -35.73374423910386], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
     }).addTo(map);
 
     // L.marker([-9.664292995805981, -35.734747280145555]).addTo(map)
