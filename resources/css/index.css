@@ -1,0 +1,240 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "";
+  font-size: medium;
+  list-style-type: none;
+  color: black;
+  text-decoration: none;
+}
+
+body{
+  display: grid;
+  grid-template-columns: auto auto;
+  width: 100%;
+  height: 100%;
+}
+
+/*ASIDE*/
+aside{
+  display: block;
+  width: 240px;
+  height: 100%;
+  background-color: #EBF7F7;
+}
+
+.aside-logo{
+  display: flex;
+  width: fill;
+  height: max-content;
+  text-align: center;
+  margin-bottom: 20%;
+}
+
+.aside-image-logo{
+  width: 30px;
+  margin: 20px;
+}
+
+.aside-text-logo{
+  width: 100%;
+  align-content: center;
+  font-size: 23px;
+  font-weight: 600;
+  text-align: left;
+  color: #162C39;
+}
+/*ASIDE*/
+
+/*ASIDE OPTIONS*/
+.options{
+  display: block;
+  width: 100%;
+  height: fit-content;
+}
+
+ul{
+  display: block;
+  width: fit-content;
+  height: 100vh;
+}
+
+.aside-item{
+  display: flex;
+  width: 200px;
+  margin: 0px 0px 30px 0px;
+}
+
+a{
+  display: flex;
+}
+
+.aside-item-image{
+  display: inline;
+  width: 30px;
+  margin: 0px 0px 0px 28px;
+  height: 30px;
+  color: #162c39; 
+}
+
+.aside-item-text{
+  display: block;
+  width: ;
+  align-content: center;
+  margin: 0px 0px 0px 18px;
+  font-weight: 900;
+  font-size: 14px;
+}
+/*ASIDE OPTIONS*/
+
+/*USUARIO*/
+.user{
+  display: flex;
+  width: 100%;
+  height: 12%;
+  justify-content: right;
+  background-color: none;
+  align-items: center;
+}
+
+.user > a{
+
+}
+
+#user-text{
+  background-color: none;
+}
+
+.user-icon{
+}
+
+.user-icon-image{
+  width: 80px;
+  margin: 10px;
+}
+/*USUARIO*/
+
+/*ANALYTICS*/
+.analytics{
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  margin: 20px 0px 0px 42px;
+}
+
+.card-background{
+  display: flex;
+  width: 240px;
+  height: 100px;
+  background-color: #EBF7F7;
+  border-radius: 16px;
+  margin-bottom: 40px;
+}
+
+.card-content{
+  display: flex;
+  width: 240px;
+  height: 100px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 16px;
+  background-color: none;
+}
+
+.card-content-left{
+  width: 120px;
+  height: 56px;
+  background-color: pink;
+}
+
+.card-content-right{
+  width: 120px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: green;
+}
+/*ANALYTICS*/
+
+.content{
+  display: block;
+  height: max-content;
+}
+
+main{
+  display: grid;
+  grid-template-areas: ;
+}
+
+.addres-bombs{
+  display: flex;
+  background-color: #5CD8B4;
+}
+
+/*ANALYTICS*/
+
+/*Adress*/
+
+.addres-bombs{
+  width: 56%;
+  height: fit-content;
+  margin-left: 44px;
+}
+
+#adress-option{
+  display: flex;
+  background-color: #5CD8B4;
+  padding: 4px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#adress-option:hover{
+  background-color: #162C39;
+  color: white;
+}
+
+.arrow-option-image{
+  width: 20px;
+  margin-left: 10px;
+}
+
+/*Adress*/
+
+/*MAIN*/
+
+main{
+  display: flex;
+  width: fit-content;
+}
+
+/*MAIN*/
+
+
+/*IFRAME*/
+
+.iframe{
+  width: 56%;
+  height: 400px;
+  background-color: cadetblue;
+  margin-left: 44px;
+  margin-top: 20px;
+}
+
+/*IFRAME*/
+
+/*EQUIPS*/
+.equips{
+  width: 30%;
+  margin: 0px 0px 0px 30px;
+  background-color: chartreuse;
+}
+
+/*EQUIPS*/
+
+.user-icon{
+  display: inline;
+  margin: 0px 10px 0px 10px;
+  background-color: white;
+}
+
+
