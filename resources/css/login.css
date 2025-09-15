@@ -41,14 +41,13 @@ header {
     background-color: #EBF7F7; /* Light blue background */
     display: flex;
     flex-direction: column;
-    justify-content: center
+    justify-content: center;
+    align-items: center;
 }
 
 .left-panel img {
     width: 473.38px;
     height: 340px;
-    align-items: center;
-    justify-content: center;
 }
 
 .right-panel {

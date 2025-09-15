@@ -18,7 +18,7 @@
     </header>
     <div class="container">
         <div class="left-panel">
-            <img src="{{ Vite::asset('resources/assets/ICON/logo.svg') }}" alt="Hidro Monitoring Logo">
+            <img src="{{ Vite::asset('resources/assets/ICON/logo1.svg') }}" alt="Hidro Monitoring Logo">
         </div>
         <div class="right-panel">
             <div class="login-card">
