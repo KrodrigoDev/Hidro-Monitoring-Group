@@ -9,7 +9,7 @@
 <body>
     <header>
         <img src="../img/contrasteICON.svg" alt="Contraste">
-        <p>Alto Contrate</p>
+        <p>Alto Contraste</p>
     </header>
     <div class="container">
         <div class="left-panel">
