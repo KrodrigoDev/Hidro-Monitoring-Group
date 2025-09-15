@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 *{
   padding: 0;
   margin: 0;
@@ -5,13 +7,13 @@
   font-family: "";
   font-size: medium;
   list-style-type: none;
+  font-family: "Inter";
   color: black;
   text-decoration: none;
 }
 
 body{
-  display: grid;
-  grid-template-columns: auto auto;
+  display: flex;
   width: 100%;
   height: 100%;
 }
@@ -19,7 +21,7 @@ body{
 /*ASIDE*/
 aside{
   display: block;
-  width: 240px;
+  width: 280px;
   height: 100%;
   background-color: #EBF7F7;
 }
@@ -33,14 +35,15 @@ aside{
 }
 
 .aside-image-logo{
-  width: 30px;
-  margin: 20px;
+  width: 36px;
+  margin:20px 14px 0px 20px;
 }
 
 .aside-text-logo{
   width: 100%;
   align-content: center;
-  font-size: 23px;
+  margin-top: 20px;
+  font-size: 18px;
   font-weight: 600;
   text-align: left;
   color: #162C39;
@@ -80,15 +83,15 @@ a{
 
 .aside-item-text{
   display: block;
-  width: ;
+  width: 30px;
   align-content: center;
   margin: 0px 0px 0px 18px;
-  font-weight: 900;
+  font-weight: 700;
   font-size: 14px;
 }
 /*ASIDE OPTIONS*/
 
-/*USUARIO*/
+/*INICIO USUARIO*/
 .user{
   display: flex;
   width: 100%;
@@ -113,50 +116,79 @@ a{
   width: 80px;
   margin: 10px;
 }
-/*USUARIO*/
+/*FIM USUARIO*/
 
-/*ANALYTICS*/
+/*INICIO ANALYTICS*/
 .analytics{
   display: grid;
-  grid-template-columns: auto auto auto auto;
-  margin: 20px 0px 0px 42px;
+  grid-template-columns: 240px 240px 240px 240px;
+  gap: 30px;
+  margin: 20px 0px 0px 20px;
 }
 
 .card-background{
   display: flex;
-  width: 240px;
   height: 100px;
   background-color: #EBF7F7;
-  border-radius: 16px;
+  border-radius: 10px;
   margin-bottom: 40px;
 }
 
 .card-content{
-  display: flex;
-  width: 240px;
-  height: 100px;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0px 16px;
+  display: grid;
+  grid-template-areas:
+    "left-top right" 
+    "left-bottom right";
+  width: 260px;
+  border-radius: 10px;
+  margin: 0px 0px;
   background-color: none;
 }
 
-.card-content-left{
-  width: 120px;
-  height: 56px;
-  background-color: pink;
+.left-top{
+  grid-area: left-top;
+  width: fit-content;
+  height: fit-content;
+  background-color: none;
 }
 
-.card-content-right{
-  width: 120px;
-  height: 40px;
-  border-radius: 100%;
-  background-color: green;
+.numer-total{
+  display: block;
+  width: 100%;
+  background-color: none;
+  text-align: left;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 30px 0px 0px 24px;
 }
-/*ANALYTICS*/
+
+.left-bottom p{
+  grid-area: left-bottom;
+  width: fit-content;
+  height: fit-content;
+  font-size: 12px;
+  margin: 0px 0px 18px 24px;
+  background-color: none;
+}
+
+.right{
+  grid-area:right;
+}
+.porcentage{
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  padding: 17px 0px 0px 4px;
+  margin: 25px 0px 0px 30px;
+  background-color: pink;
+  font-size: 14px;
+  border-radius: 50%;
+}
+/*FIM ANALYTICS*/
 
 .content{
   display: block;
+  width: 100%;
   height: max-content;
 }
 
@@ -172,12 +204,23 @@ main{
 
 /*ANALYTICS*/
 
+/*INICIO GRID 2*/
+.grid-2{
+  display: grid;
+  grid-template-areas: 
+    "addres equips"
+    "iframe equips"
+  ;
+}
+/*FIM GRID 2*/
+
 /*Adress*/
 
 .addres-bombs{
-  width: 56%;
+  grid-area:addres;
+  width: fit-content;
   height: fit-content;
-  margin-left: 44px;
+  margin-left: 20px;
 }
 
 #adress-option{
@@ -203,6 +246,7 @@ main{
 /*MAIN*/
 
 main{
+  grid-area:iframe;
   display: flex;
   width: fit-content;
 }
@@ -213,28 +257,119 @@ main{
 /*IFRAME*/
 
 .iframe{
-  width: 56%;
+  width: 720px;
   height: 400px;
   background-color: cadetblue;
-  margin-left: 44px;
+  margin-left: 20px;
   margin-top: 20px;
 }
 
 /*IFRAME*/
 
-/*EQUIPS*/
+/*INICIO EQUIPS*/
 .equips{
-  width: 30%;
-  margin: 0px 0px 0px 30px;
-  background-color: chartreuse;
+  grid-area: equips;
+  width: 90%;
+  margin-right: 100px;
+  background-color: red;
 }
 
-/*EQUIPS*/
+h2{
+  text-align: left;
+  font-size: px;
+}
+
+/*FIM EQUIPS*/
 
 .user-icon{
   display: inline;
   margin: 0px 10px 0px 10px;
   background-color: white;
 }
+
+/*INICIO METRICAS*/
+h2{
+  display: block;
+  width: fit-content;
+  height: fit-content;
+  margin: 40px 0px 0px 48px;
+  background-color: none;
+  font-size: 32px;
+  color: #162C39;
+}
+
+.metric-background{
+  display: flex;
+  justify-content: left;
+  width: fit-content;
+  height: fit-content;
+  margin: 40px 0px 0px 48px;
+  background-color: none;
+  margin-bottom: 100px;
+}
+
+.metric-card{
+  background-color: #EBF7F7;
+  border-radius: 10px;
+  width: 122px;
+  height: 172px;
+  margin: 8px;
+}
+
+.top{
+  display: block;
+  width: auto;
+  height: 20px;
+  justify-content: left;
+  background-color: ;
+}
+
+.signal{
+  display: block;
+  align-content: center;
+  width: 16px;
+  margin-left: 6px;
+  margin-top: 2px;
+}
+
+.top-midle{
+  display: block;
+  width: auto;
+  height: 60px;
+  align-content: center;
+  text-align: center;
+  background-color: none;
+}
+
+.top-midle > p{
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.bottom-midle{
+  display: block;
+  width: auto;
+  height: 80px;
+  align-content: center;
+  text-align: center;
+  background-color: none;
+}
+
+#valor{
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.bottom{
+  display: block;
+  width: auto;
+  background-color: aqua;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.bottom > p{
+  visibility: hidden;
+}
+/*FIM METRICAS*/
 
 
