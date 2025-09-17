@@ -2,6 +2,7 @@
 
 ## Estrutura de Arquivos
 
+```
 laravel_project/
 ├── app/                                # Lógica principal da aplicação
 │   ├── Console/                        # Comandos Artisan personalizados
