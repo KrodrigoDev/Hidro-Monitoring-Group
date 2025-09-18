@@ -24,6 +24,7 @@ header {
     display: flex;
     justify-content: center;
     width: 1200px; /* Adjust as needed */
+    height: 570px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     overflow: hidden;
@@ -67,53 +68,14 @@ header {
 .login-card h2 {
     font-size: 28px;
     color: #333333;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
 
 }
 
 .login-card p {
     color: #333333;
     margin-top: 0px;
-}
-
-.google-login-btn {
-    background-color: #EBF7F7;
-    color: #333333;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 100%;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    gap: 10px; 
-    box-sizing: border-box;
-}
-
-.divider {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #aaa;
-    margin: 20px 0;
-    width: 100%;
-}
-
-.divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #eee;
-}
-
-.divider:not(:empty)::before {
-    margin-right: .25em;
-}
-
-.divider:not(:empty)::after {
-    margin-left: .25em;
+    margin-bottom: 15px;
 }
 
 .input-group {
@@ -159,17 +121,5 @@ header {
     margin-bottom: 20px;
     display: block;
     text-align: center;
-}
-
-.signup-text {
-    color: #777;
-    font-size: 14px;
-    text-align: center;
-}
-
-.signup-link {
-    color: #162C39;
-    text-decoration: none;
-    font-weight: bold;
 }
 

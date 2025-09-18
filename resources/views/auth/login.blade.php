@@ -24,11 +24,6 @@
             <div class="login-card">
                 <h2>Login</h2>
                 <p>Faça login em sua conta</p>
-                <button class="google-login-btn">
-                    <img src="{{ Vite::asset('resources/assets/ICON/iconeGoogle.svg') }}" alt="iconeGoogle">
-                    <span>Login com o Google</span>
-                </button>
-                <div class="divider">Ou</div>
                 <form>
                     <div class="input-group">
                         <label for="email">Email</label>
@@ -41,7 +36,6 @@
                     <button type="submit" class="login-btn">Login</button>
                 </form>
                 <a href="#" class="forgot-password">Esqueceu sua senha?</a>
-                <p class="signup-text">Ainda não possui conta? <a href="#" class="signup-link">Cadastre-se!</a></p>
             </div>
         </div>
     </div>

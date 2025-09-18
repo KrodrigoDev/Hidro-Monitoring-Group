@@ -9,3 +9,7 @@ Route::get('/', function () {
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register'); 
+
+Route::get('/user-management', function () {
+    return view('auth.user-management');
+})->name('user-management'); 
