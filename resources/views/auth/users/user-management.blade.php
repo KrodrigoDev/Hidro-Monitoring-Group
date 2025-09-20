@@ -10,278 +10,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ Vite::asset('resources/assets/ICON/apple-touch-icon.png') }}" />
     <link rel="manifest" href="{{ Vite::asset('resources/assets/ICON/site.webmanifest') }}" />
     @vite(['resources/css/user-management.css', 'resources/js/app.js'])
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0px;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #ffff;
-            color: #1e293b;
-        }
-
-        header {
-            width: 100%; 
-            height: 64px;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: right;
-            gap: 5px;
-            align-items: center;
-            background-color: #EBF7F7;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            box-sizing: border-box; 
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
-            overflow: hidden;
-            margin-top: 30px;
-        }
-
-        .users-filters {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .users-filters h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        .btn-primary {
-            background-color: #3b82f6;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: background-color 0.2s;
-        }
-
-        .btn-primary:hover {
-            background-color: #2563eb;
-        }
-
-        .filters {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-            margin-bottom: 1.5rem;
-        }
-
-        .filters-row {
-            display: grid;
-            grid-template-columns: 1fr 200px 200px auto;
-            gap: 1rem;
-            align-items: end;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #374151;
-        }
-
-        .form-control {
-            padding: 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.5rem;
-            font-size: 0.875rem;
-            transition: border-color 0.2s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .btn-secondary {
-            background-color: #6b7280;
-            color: white;
-            padding: 0.75rem 1rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .btn-secondary:hover {
-            background-color: #4b5563;
-        }
-
-        .users-table {
-            background: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .table th {
-            background-color: #f8fafc;
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            color: #374151;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .table td {
-            padding: 1rem;
-            border-bottom: 1px solid #f3f4f6;
-        }
-
-        .table tbody tr:hover {
-            background-color: #f9fafb;
-        }
-
-        .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-active {
-            background-color: #dcfce7;
-            color: #166534;
-        }
-
-        .status-inactive {
-            background-color: #fee2e2;
-            color: #991b1b;
-        }
-
-        .role-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.375rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .role-admin {
-            background-color: #ddd6fe;
-            color: #5b21b6;
-        }
-
-        .role-user {
-            background-color: #e0f2fe;
-            color: #0369a1;
-        }
-
-        .actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn-sm {
-            padding: 0.5rem 0.75rem;
-            font-size: 0.75rem;
-            border-radius: 0.375rem;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            transition: all 0.2s;
-        }
-
-        .btn-edit {
-            background-color: #f59e0b;
-            color: white;
-        }
-
-        .btn-edit:hover {
-            background-color: #d97706;
-        }
-
-        .btn-delete {
-            background-color: #ef4444;
-            color: white;
-        }
-
-        .btn-delete:hover {
-            background-color: #dc2626;
-        }
-
-        .btn-toggle {
-            background-color: #10b981;
-            color: white;  
-        }
-
-        .btn-toggle:hover {
-            background-color: #059669;
-        }
-
-        .btn-toggle.inactive {
-            background-color: #6b7280;
-        }
-
-        .btn-toggle.inactive:hover {
-            background-color: #4b5563;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: #6b7280;
-        }
-
-        .empty-state img {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 1rem;
-            opacity: 0.5;
-        }
-
-        @media (max-width: 768px) {
-            .filters-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .table {
-                font-size: 0.875rem;
-            }
-            
-            .actions {
-                flex-direction: column;
-            }
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -313,7 +41,7 @@
                             id="search" 
                             name="search" 
                             class="form-control" 
-                            placeholder="Digite o nome ou email do usuário..."
+                            placeholder="Digite o nome ou CPF do usuário..."
                             value="{{ request('search') }}"
                         >
                     </div>
@@ -345,11 +73,10 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Nome do Usuário</th>
-                            <th>Email</th>
+                            <th>Nome Completo do Usuário</th>
+                            <th>CPF</th>
                             <th>Função</th>
                             <th>Status</th>
-                            <th>Data de Cadastro</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -361,10 +88,21 @@
                                         <div style="width: 40px; height: 40px; background-color: #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: #6b7280;">
                                             {{ strtoupper(substr($user->name, 0, 1)) }}
                                         </div>
-                                        <span style="font-weight: 600;">{{ $user->name }}</span>
+                                        <div>
+                                            <div style="font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px;" title="{{ $user->name }}">
+                                                {{ $user->name }}
+                                            </div>
+                                            <div style="font-size: 0.75rem; color: #6b7280;">
+                                                {{ $user->email }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
-                                <td>{{ $user->email }}</td>
+                                <td>
+                                    <span style="font-family: monospace;">
+                                        {{ $user->cpf ?? 'Não informado' }}
+                                    </span>
+                                </td>
                                 <td>
                                     <span class="role-badge {{ $user->role == 'admin' ? 'role-admin' : 'role-user' }}">
                                         {{ $user->role == 'admin' ? 'Administrador' : 'Usuário Padrão' }}
@@ -375,7 +113,6 @@
                                         {{ $user->status ? 'Ativo' : 'Inativo' }}
                                     </span>
                                 </td>
-                                <td>{{ $user->created_at->format('d/m/Y H:i') }}</td>
                                 <td>
                                     <div class="actions">
                                         <a href="{{ route('users.edit', $user->id) }}" class="btn-sm btn-edit">
@@ -433,3 +170,4 @@
     </div>
 </body>
 </html>
+
