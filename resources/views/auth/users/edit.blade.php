@@ -14,7 +14,6 @@
 <body>
     <header>
         <button class="return-btn mr-auto" onclick="window.location.href='{{ route('users.index') }}'">
-            <img src="{{ Vite::asset('resources/assets/ICON/returnICON.svg') }}" alt="Return">
         </button>
 
         <img src="{{ Vite::asset('resources/assets/ICON/contrasteICON.svg') }}" alt="Contraste">
