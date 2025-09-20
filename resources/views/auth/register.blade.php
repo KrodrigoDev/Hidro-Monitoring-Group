@@ -13,6 +13,10 @@
 </head>
 <body>
     <header>
+        <button class="return-btn mr-auto">
+            <img src="{{ Vite::asset('resources/assets/ICON/returnICON.svg') }}" alt="Return">
+        </button>
+
         <img src="{{ Vite::asset('resources/assets/ICON/contrasteICON.svg') }}" alt="Contraste">
         <p>Alto Contraste</p>
     </header>
@@ -22,7 +26,7 @@
         </div>
         <div class="right-panel">
             <div class="register-card">
-                <h2>Cadastre-se</h2>
+                <h2>Cadastrar Usuário</h2>
                 <form>
                     <div class="form-row">
                         <div class="input-group">
@@ -59,8 +63,7 @@
                             </select>
                         </div>
                     </div>
-                    <p class="login-text">Já possui conta? <a href="{{ route("login") }}" class="login-link">Realize o Login!</a></p>
-                    <button type="submit" class="register-btn">Concluir Cadastro</button>
+                    <button type="submit" class="register-btn">Cadastrar Novo Usuário</button>
                 </form>
                 
             </div>

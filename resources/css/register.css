@@ -63,6 +63,7 @@ header {
     width: 100%;
     max-width: 1000px;
     text-align: left;
+    min-height: 556px;
 }
 
 .register-card h2 {
