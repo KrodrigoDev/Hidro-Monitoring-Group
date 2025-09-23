@@ -10,283 +10,10 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ Vite::asset('resources/assets/ICON/apple-touch-icon.png') }}" />
     <link rel="manifest" href="{{ Vite::asset('resources/assets/ICON/site.webmanifest') }}" />
     @vite(['resources/css/user-management.css', 'resources/js/app.js'])
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0px;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #ffff;
-            color: #1e293b;
-        }
-
-        header {
-            width: 100%; 
-            height: 64px;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: right;
-            gap: 5px;
-            align-items: center;
-            background-color: #EBF7F7;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            box-sizing: border-box; 
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
-            overflow: hidden;
-            margin-top: 30px;
-        }
-
-        .users-filters {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .users-filters h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        .btn-primary {
-            background-color: #3b82f6;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: background-color 0.2s;
-        }
-
-        .btn-primary:hover {
-            background-color: #2563eb;
-        }
-
-        .filters {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-            margin-bottom: 1.5rem;
-        }
-
-        .filters-row {
-            display: grid;
-            grid-template-columns: 1fr 200px 200px auto;
-            gap: 1rem;
-            align-items: end;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #374151;
-        }
-
-        .form-control {
-            padding: 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.5rem;
-            font-size: 0.875rem;
-            transition: border-color 0.2s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .btn-secondary {
-            background-color: #6b7280;
-            color: white;
-            padding: 0.75rem 1rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .btn-secondary:hover {
-            background-color: #4b5563;
-        }
-
-        .users-table {
-            background: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .table th {
-            background-color: #f8fafc;
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            color: #374151;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .table td {
-            padding: 1rem;
-            border-bottom: 1px solid #f3f4f6;
-        }
-
-        .table tbody tr:hover {
-            background-color: #f9fafb;
-        }
-
-        .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-active {
-            background-color: #dcfce7;
-            color: #166534;
-        }
-
-        .status-inactive {
-            background-color: #fee2e2;
-            color: #991b1b;
-        }
-
-        .role-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.375rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .role-admin {
-            background-color: #ddd6fe;
-            color: #5b21b6;
-        }
-
-        .role-user {
-            background-color: #e0f2fe;
-            color: #0369a1;
-        }
-
-        .actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn-sm {
-            padding: 0.5rem 0.75rem;
-            font-size: 0.75rem;
-            border-radius: 0.375rem;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            transition: all 0.2s;
-        }
-
-        .btn-edit {
-            background-color: #f59e0b;
-            color: white;
-        }
-
-        .btn-edit:hover {
-            background-color: #d97706;
-        }
-
-        .btn-delete {
-            background-color: #ef4444;
-            color: white;
-        }
-
-        .btn-delete:hover {
-            background-color: #dc2626;
-        }
-
-        .btn-toggle {
-            background-color: #10b981;
-            color: white;  
-        }
-
-        .btn-toggle:hover {
-            background-color: #059669;
-        }
-
-        .btn-toggle.inactive {
-            background-color: #6b7280;
-        }
-
-        .btn-toggle.inactive:hover {
-            background-color: #4b5563;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: #6b7280;
-        }
-
-        .empty-state img {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 1rem;
-            opacity: 0.5;
-        }
-
-        @media (max-width: 768px) {
-            .filters-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .table {
-                font-size: 0.875rem;
-            }
-            
-            .actions {
-                flex-direction: column;
-            }
-        }
-    </style>
 </head>
 <body>
     <header>
-        <button class="return-btn mr-auto">
-            <img src="{{ Vite::asset('resources/assets/ICON/returnICON.svg') }}" alt="Return">
+        <button class="return-btn mr-auto" onclick="window.location.href='{{ route('users.index') }}'">
         </button>
 
         <img src="{{ Vite::asset('resources/assets/ICON/contrasteICON.svg') }}" alt="Contraste">
@@ -313,7 +40,7 @@
                             id="search" 
                             name="search" 
                             class="form-control" 
-                            placeholder="Digite o nome ou email do usuário..."
+                            placeholder="Digite o nome ou CPF do usuário..."
                             value="{{ request('search') }}"
                         >
                     </div>
@@ -345,11 +72,10 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Nome do Usuário</th>
-                            <th>Email</th>
+                            <th>Nome Completo do Usuário</th>
+                            <th>CPF</th>
                             <th>Função</th>
                             <th>Status</th>
-                            <th>Data de Cadastro</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -361,10 +87,21 @@
                                         <div style="width: 40px; height: 40px; background-color: #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: #6b7280;">
                                             {{ strtoupper(substr($user->name, 0, 1)) }}
                                         </div>
-                                        <span style="font-weight: 600;">{{ $user->name }}</span>
+                                        <div>
+                                            <div style="font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px;" title="{{ $user->name }}">
+                                                {{ $user->name }}
+                                            </div>
+                                            <div style="font-size: 0.75rem; color: #6b7280;">
+                                                {{ $user->email }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
-                                <td>{{ $user->email }}</td>
+                                <td>
+                                    <span style="font-family: monospace;">
+                                        {{ $user->cpf ?? 'Não informado' }}
+                                    </span>
+                                </td>
                                 <td>
                                     <span class="role-badge {{ $user->role == 'admin' ? 'role-admin' : 'role-user' }}">
                                         {{ $user->role == 'admin' ? 'Administrador' : 'Usuário Padrão' }}
@@ -375,7 +112,6 @@
                                         {{ $user->status ? 'Ativo' : 'Inativo' }}
                                     </span>
                                 </td>
-                                <td>{{ $user->created_at->format('d/m/Y H:i') }}</td>
                                 <td>
                                     <div class="actions">
                                         <a href="{{ route('users.edit', $user->id) }}" class="btn-sm btn-edit">
@@ -385,7 +121,7 @@
                                             </svg>
                                             Editar
                                         </a>
-                                        <form method="POST" action="{{ route('users.toggle', $user->id) }}" style="display: inline;">
+                                        <form method="POST" action="{{ route('users.toggle', $user->id) }}" style="display: inline;" onsubmit="return confirmToggle(event, '{{ $user->name }}', {{ $user->status ? 'true' : 'false' }})">
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" class="btn-sm btn-toggle {{ !$user->status ? 'inactive' : '' }}">
@@ -396,7 +132,7 @@
                                                 {{ $user->status ? 'Desativar' : 'Ativar' }}
                                             </button>
                                         </form>
-                                        <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir este usuário?')">
+                                        <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display: inline;" onsubmit="return confirmDelete(event, '{{ $user->name }}')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn-sm btn-delete">
@@ -433,3 +169,267 @@
     </div>
 </body>
 </html>
+
+
+    <!-- Modal de Confirmação de Exclusão -->
+    <div id="deleteModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão de Usuário</h3>
+                <span class="close" onclick="closeDeleteModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Você está prestes a excluir o usuário <strong id="deleteUserName"></strong>.</p>
+                <p>Esta ação é <strong>irreversível</strong> e removerá permanentemente todos os dados do usuário.</p>
+                
+                <div class="confirmation-input">
+                    <label for="deleteConfirmation">Para confirmar, digite a frase abaixo:</label>
+                    <p class="confirmation-phrase">"Estou ciente e desejo remover este usuário!"</p>
+                    <input 
+                        type="text" 
+                        id="deleteConfirmation" 
+                        placeholder="Digite a frase de confirmação..."
+                        autocomplete="off"
+                        onpaste="return false"
+                        ondrop="return false"
+                        style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ddd; border-radius: 4px;"
+                    >
+                    <div id="deleteError" style="color: red; margin-top: 5px; display: none;">
+                        A frase digitada não confere. Digite exatamente como mostrado acima.
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeDeleteModal()">Cancelar</button>
+                <button type="button" class="btn-danger" onclick="confirmDeleteAction()" id="confirmDeleteBtn" disabled>
+                    Excluir Usuário
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação de Desativação -->
+    <div id="toggleModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="toggleModalTitle">Confirmar Ação</h3>
+                <span class="close" onclick="closeToggleModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="toggleModalMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeToggleModal()">Cancelar</button>
+                <button type="button" class="btn-primary" onclick="confirmToggleAction()" id="confirmToggleBtn">
+                    Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDeleteForm = null;
+        let currentToggleForm = null;
+        const requiredPhrase = "Estou ciente e desejo remover este usuário!";
+
+        function confirmDelete(event, userName) {
+            event.preventDefault();
+            currentDeleteForm = event.target;
+            
+            document.getElementById('deleteUserName').textContent = userName;
+            document.getElementById('deleteConfirmation').value = '';
+            document.getElementById('deleteError').style.display = 'none';
+            document.getElementById('confirmDeleteBtn').disabled = true;
+            document.getElementById('deleteModal').style.display = 'block';
+            
+            return false;
+        }
+
+        function confirmToggle(event, userName, isActive) {
+            event.preventDefault();
+            currentToggleForm = event.target;
+            
+            const action = isActive ? 'desativar' : 'ativar';
+            const title = isActive ? 'Desativar Usuário' : 'Ativar Usuário';
+            const message = `Tem certeza que deseja ${action} o usuário ${userName}?`;
+            
+            document.getElementById('toggleModalTitle').textContent = title;
+            document.getElementById('toggleModalMessage').textContent = message;
+            document.getElementById('toggleModal').style.display = 'block';
+            
+            return false;
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+            currentDeleteForm = null;
+        }
+
+        function closeToggleModal() {
+            document.getElementById('toggleModal').style.display = 'none';
+            currentToggleForm = null;
+        }
+
+        function confirmDeleteAction() {
+            const inputValue = document.getElementById('deleteConfirmation').value;
+            const errorDiv = document.getElementById('deleteError');
+            
+            if (inputValue === requiredPhrase) {
+                if (currentDeleteForm) {
+                    currentDeleteForm.submit();
+                }
+                closeDeleteModal();
+            } else {
+                errorDiv.style.display = 'block';
+            }
+        }
+
+        function confirmToggleAction() {
+            if (currentToggleForm) {
+                currentToggleForm.submit();
+            }
+            closeToggleModal();
+        }
+
+        // Verificar se a frase está correta em tempo real
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteInput = document.getElementById('deleteConfirmation');
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+            const errorDiv = document.getElementById('deleteError');
+            
+            if (deleteInput) {
+                deleteInput.addEventListener('input', function() {
+                    const inputValue = this.value;
+                    
+                    if (inputValue === requiredPhrase) {
+                        confirmBtn.disabled = false;
+                        errorDiv.style.display = 'none';
+                        this.style.borderColor = '#28a745';
+                    } else {
+                        confirmBtn.disabled = true;
+                        this.style.borderColor = '#dc3545';
+                        
+                        if (inputValue.length > 0) {
+                            errorDiv.style.display = 'block';
+                        } else {
+                            errorDiv.style.display = 'none';
+                        }
+                    }
+                });
+            }
+        });
+
+        // Fechar modais ao clicar fora
+        window.onclick = function(event) {
+            const deleteModal = document.getElementById('deleteModal');
+            const toggleModal = document.getElementById('toggleModal');
+            
+            if (event.target == deleteModal) {
+                closeDeleteModal();
+            }
+            if (event.target == toggleModal) {
+                closeToggleModal();
+            }
+        }
+    </script>
+
+    <style>
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 0;
+            border: none;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+        }
+
+        .confirmation-phrase {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-left: 4px solid #007bff;
+            margin: 10px 0;
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-danger:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>

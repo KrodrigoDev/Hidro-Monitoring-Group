@@ -3,472 +3,410 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Usuário - Hidro Monitoring</title>
+    <title>Hidro Monitoring - Cadastro</title>
     <link rel="icon" type="image/png" href="{{ Vite::asset('resources/assets/ICON/favicon-96x96.png') }}" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="{{ Vite::asset('resources/assets/ICON/favicon.svg') }}" />
     <link rel="shortcut icon" href="{{ Vite::asset('resources/assets/ICON/favicon.ico') }}" />
     <link rel="apple-touch-icon" sizes="180x180" href="{{ Vite::asset('resources/assets/ICON/apple-touch-icon.png') }}" />
     <link rel="manifest" href="{{ Vite::asset('resources/assets/ICON/site.webmanifest') }}" />
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: \'Inter\', -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
-            min-height: 100vh;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        header {
-            width: 100%; 
-            height: 64px;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: right;
-            gap: 5px;
-            align-items: center;
-            background-color: #EBF7F7;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            box-sizing: border-box; 
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            margin-top: 30px;
-        }
-
-        .form-card {
-            width: 1200px;
-            background: white;
-            padding: 2.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        .info-newuser {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .logo {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1rem;
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            font-weight: 700;
-        }
-
-        .info-newuser h1 {
-            font-size: 1.875rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-        }
-
-        .info-newuser p {
-            color: #64748b;
-            font-size: 0.875rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #374151;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.875rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.5rem;
-            font-size: 0.875rem;
-            transition: all 0.2s;
-            background-color: #fff;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .form-control.error {
-            border-color: #ef4444;
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-        }
-
-        .error-message {
-            color: #ef4444;
-            font-size: 0.75rem;
-            margin-top: 0.25rem;
-        }
-
-        .btn-primary {
-            width: 100%;
-            background-color: #3b82f6;
-            color: white;
-            padding: 0.875rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary:hover {
-            background-color: #2563eb;
-        }
-
-        .btn-primary:disabled {
-            background-color: #9ca3af;
-            cursor: not-allowed;
-        }
-
-        .btn-secondary {
-            width: 100%;
-            background-color: #6b7280;
-            color: white;
-            padding: 0.875rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .btn-secondary:hover {
-            background-color: #4b5563;
-        }
-
-        .password-requirements {
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .password-requirements h4 {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 0.5rem;
-        }
-
-        .password-requirements ul {
-            list-style: none;
-            font-size: 0.75rem;
-            color: #6b7280;
-        }
-
-        .password-requirements li {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .password-requirements li.valid {
-            color: #059669;
-        }
-
-        .password-requirements li.invalid {
-            color: #dc2626;
-        }
-
-        .alert {
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1.5rem;
-            font-size: 0.875rem;
-        }
-
-        .alert-success {
-            background-color: #dcfce7;
-            color: #166534;
-            border: 1px solid #bbf7d0;
-        }
-
-        .alert-error {
-            background-color: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
-        }
-
-        @media (max-width: 640px) {
-            .container {
-                margin: 1rem;
-            }
-            
-            .form-card {
-                padding: 1.5rem;
-            }
-        }
-    </style>
+    @vite(['resources/css/create.css', 'resources/js/app.js'])
 </head>
 <body>
     <header>
-        <button class="return-btn mr-auto">
-            <img src="{{ Vite::asset('resources/assets/ICON/returnICON.svg') }}" alt="Return">
+        <button class="return-btn mr-auto" onclick="window.location.href='{{ route('users.index') }}'">
         </button>
 
         <img src="{{ Vite::asset('resources/assets/ICON/contrasteICON.svg') }}" alt="Contraste">
         <p>Alto Contraste</p>
     </header>
+
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="alert alert-error">
+            <strong>Erro ao cadastrar usuário:</strong>
+            <ul style="margin-top: 0.5rem; margin-left: 1rem;">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="container">
-        <div class="form-card">
-            <div class="info-newuser">
-                <div class="logo">
-                    <img src="{{ Vite::asset('resources/assets/ICON/logo.svg') }}" alt="Hidro Monitoring" style="width: 40px; height: 40px;">
-                </div>
-                <h1>Cadastrar Usuário</h1>
-                <p>Preencha os dados para criar uma nova conta</p>
-            </div>
-
-            @if(session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            @if($errors->any())
-                <div class="alert alert-error">
-                    <strong>Erro ao cadastrar usuário:</strong>
-                    <ul style="margin-top: 0.5rem; margin-left: 1rem;">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <form method="POST" action="{{ route('users.store') }}" id="userForm">
-                @csrf
-                
-                <div class="form-group">
-                    <label for="name">Nome Completo</label>
-                    <input 
-                        type="text" 
-                        id="name" 
-                        name="name" 
-                        class="form-control {{ $errors->has('name') ? 'error' : '' }}" 
-                        placeholder="Digite o nome completo"
-                        value="{{ old('name') }}"
-                        required
-                    >
-                    @error('name')
-                        <div class="error-message">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        class="form-control {{ $errors->has('email') ? 'error' : '' }}" 
-                        placeholder="Digite o endereço de email"
-                        value="{{ old('email') }}"
-                        required
-                    >
-                    @error('email')
-                        <div class="error-message">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="role">Função</label>
-                    <select 
-                        id="role" 
-                        name="role" 
-                        class="form-control {{ $errors->has('role') ? 'error' : '' }}"
-                        required
-                    >
-                        <option value="">Selecione uma função</option>
-                        <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Usuário Padrão</option>
-                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrador</option>
-                    </select>
-                    @error('role')
-                        <div class="error-message">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Senha</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        class="form-control {{ $errors->has('password') ? 'error' : '' }}" 
-                        placeholder="Digite uma senha segura"
-                        required
-                    >
-                    @error('password')
-                        <div class="error-message">{{ $message }}</div>
-                    @enderror
+        <div class="left-panel">
+            <img src="{{ Vite::asset('resources/assets/ICON/logo2.svg') }}" alt="Hidro Monitoring Logo">
+        </div>
+        <div class="right-panel">
+            <div class="register-card">
+                <h2>Cadastrar Usuário</h2>
+                <form method="POST" action="{{ route('users.store') }}" id="userForm">
+                    @csrf
                     
-                    <div class="password-requirements">
-                        <h4>Requisitos da senha:</h4>
-                        <ul id="passwordRequirements">
-                            <li id="length" class="invalid">
-                                <span>✗</span> Mínimo de 8 caracteres
-                            </li>
-                            <li id="uppercase" class="invalid">
-                                <span>✗</span> Pelo menos uma letra maiúscula
-                            </li>
-                            <li id="lowercase" class="invalid">
-                                <span>✗</span> Pelo menos uma letra minúscula
-                            </li>
-                            <li id="number" class="invalid">
-                                <span>✗</span> Pelo menos um número
-                            </li>
-                        </ul>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="name">Nome Completo</label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                name="name" 
+                                class="form-control {{ $errors->has('name') ? 'error' : '' }}" 
+                                placeholder="Seu nome completo"
+                                value="{{ old('name') }}"
+                                required
+                            >
+                            @error('name')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group">
+                            <label for="cpf">CPF</label>
+                            <input 
+                                type="text" 
+                                id="cpf" 
+                                name="cpf" 
+                                class="form-control {{ $errors->has('cpf') ? 'error' : '' }}" 
+                                placeholder="000.000.000-00"
+                                value="{{ old('cpf') }}"
+                                required
+                            >
+                            @error('cpf')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="birth_date">Data de nascimento</label>
+                            <input 
+                                type="date" 
+                                id="birth_date" 
+                                name="birth_date" 
+                                class="form-control {{ $errors->has('birth_date') ? 'error' : '' }}"
+                                value="{{ old('birth_date') }}"
+                                required
+                            >
+                            @error('birth_date')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group">
+                            <label for="email">E-mail</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="form-control {{ $errors->has('email') ? 'error' : '' }}" 
+                                placeholder="seu@email.com"
+                                value="{{ old('email') }}"
+                                required
+                            >
+                            @error('email')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="estado">Estado</label>
+                            <select 
+                                id="estado" 
+                                name="estado" 
+                                class="form-control {{ $errors->has('estado') ? 'error' : '' }}"
+                                required
+                                onchange="loadMunicipios()"
+                            >
+                                <option value="">Selecione o estado</option>
+                                <!-- Estados serão carregados dinamicamente -->
+                            </select>
+                            @error('estado')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group">
+                            <label for="municipio">Município</label>
+                            <select 
+                                id="municipio" 
+                                name="municipio" 
+                                class="form-control {{ $errors->has('municipio') ? 'error' : '' }}"
+                                required
+                                onchange="loadUnidades()"
+                                disabled
+                            >
+                                <option value="">Selecione o município</option>
+                            </select>
+                            @error('municipio')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="unidades">Unidades de Acesso</label>
+                            <button type="button" class="equipment-btn" onclick="openUnidadesModal()" id="unidadesBtn" disabled>
+                                Selecionar Unidades
+                            </button>
+                            <div id="selectedUnidades" class="selected-equipment-list"></div>
+                            @error('unidades')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group">
+                            <label for="role">Permissões</label>
+                            <select 
+                                id="role" 
+                                name="role" 
+                                class="form-control {{ $errors->has('role') ? 'error' : '' }}"
+                                required
+                            >
+                                <option value="">Selecione as permissões</option>
+                                <option value="1" {{ old('role') == '1' ? 'selected' : '' }}>Nível 1 - Visualização</option>
+                                <option value="2" {{ old('role') == '2' ? 'selected' : '' }}>Nível 2 - Operacional</option>
+                                <option value="3" {{ old('role') == '3' ? 'selected' : '' }}>Nível 3 - Gestor</option>
+                                <option value="3_extra" {{ old('role') == '3_extra' ? 'selected' : '' }}>Nível 3 - Gestor com Permissão Extra</option>
+                            </select>
+                            @error('role')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Senha será gerada automaticamente e enviada por e-mail -->
+
+                    <!-- Equipamentos são vinculados às unidades automaticamente -->
+
+                    <button type="submit" class="register-btn" id="submitBtn">Cadastrar Novo Usuário</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Unidades -->
+    <div id="unidadesModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Selecionar Unidades de Acesso</h3>
+                <span class="close" onclick="closeUnidadesModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="filters-modal">
+                    <div class="form-group">
+                        <label for="filterMunicipio">Filtrar por Município:</label>
+                        <select id="filterMunicipio" onchange="filterUnidadesByMunicipio()">
+                            <option value="">Todos os municípios</option>
+                        </select>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="password_confirmation">Confirmar Senha</label>
-                    <input 
-                        type="password" 
-                        id="password_confirmation" 
-                        name="password_confirmation" 
-                        class="form-control {{ $errors->has('password_confirmation') ? 'error' : '' }}" 
-                        placeholder="Digite a senha novamente"
-                        required
-                    >
-                    @error('password_confirmation')
-                        <div class="error-message">{{ $message }}</div>
-                    @enderror
+                <div class="unidades-list" id="unidadesList">
+                    <!-- Lista de unidades será carregada aqui dinamicamente -->
                 </div>
-
-                <button type="submit" class="btn-primary" id="submitBtn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
-                    Cadastrar Usuário
-                </button>
-
-                <a href="{{ route('users.index') }}" class="btn-secondary">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                    Voltar para Listagem
-                </a>
-            </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeUnidadesModal()">Cancelar</button>
+                <button type="button" class="btn-primary" onclick="saveUnidadesSelection()">Confirmar Seleção</button>
+            </div>
         </div>
     </div>
 
     <script>
+        let estados = [];
+        let municipios = [];
+        let unidades = [];
+        let selectedUnidades = [];
+
         document.addEventListener('DOMContentLoaded', function() {
-            const passwordInput = document.getElementById('password');
-            const confirmPasswordInput = document.getElementById('password_confirmation');
-            const submitBtn = document.getElementById('submitBtn');
-            
-            // Password validation
-            passwordInput.addEventListener('input', function() {
-                const password = this.value;
-                
-                // Length check
-                const lengthCheck = document.getElementById('length');
-                if (password.length >= 8) {
-                    lengthCheck.classList.remove('invalid');
-                    lengthCheck.classList.add('valid');
-                    lengthCheck.querySelector('span').textContent = '✓';
-                } else {
-                    lengthCheck.classList.remove('valid');
-                    lengthCheck.classList.add('invalid');
-                    lengthCheck.querySelector('span').textContent = '✗';
-                }
-                
-                // Uppercase check
-                const uppercaseCheck = document.getElementById('uppercase');
-                if ([A-Z].test(password)) {
-                    uppercaseCheck.classList.remove('invalid');
-                    uppercaseCheck.classList.add('valid');
-                    uppercaseCheck.querySelector('span').textContent = '✓';
-                } else {
-                    uppercaseCheck.classList.remove('valid');
-                    uppercaseCheck.classList.add('invalid');
-                    uppercaseCheck.querySelector('span').textContent = '✗';
-                }
-                
-                // Lowercase check
-                const lowercaseCheck = document.getElementById('lowercase');
-                if (/[a-z]/.test(password)) {
-                    lowercaseCheck.classList.remove('invalid');
-                    lowercaseCheck.classList.add('valid');
-                    lowercaseCheck.querySelector('span').textContent = '✓';
-                } else {
-                    lowercaseCheck.classList.remove('valid');
-                    lowercaseCheck.classList.add('invalid');
-                    lowercaseCheck.querySelector('span').textContent = '✗';
-                }
-                
-                // Number check
-                const numberCheck = document.getElementById('number');
-                if ([0-9].test(password)) {
-                    numberCheck.classList.remove('invalid');
-                    numberCheck.classList.add('valid');
-                    numberCheck.querySelector('span').textContent = '✓';
-                } else {
-                    numberCheck.classList.remove('valid');
-                    numberCheck.classList.add('invalid');
-                    numberCheck.querySelector('span').textContent = '✗';
-                }
+            // CPF mask
+            document.getElementById('cpf').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                e.target.value = value;
             });
-            
-            // Form validation
-            document.getElementById('userForm').addEventListener('submit', function(e) {
-                const password = passwordInput.value;
-                const confirmPassword = confirmPasswordInput.value;
-                
-                if (password !== confirmPassword) {
-                    e.preventDefault();
-                    alert('As senhas não coincidem. Por favor, verifique e tente novamente.');
-                    return false;
-                }
-                
-                // Disable submit button to prevent double submission
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6"/></svg> Cadastrando...';
-            });
+
+            // Carregar estados
+            loadEstados();
+
+            // Verificar permissões do usuário logado para habilitar/desabilitar opções
+            checkUserPermissions();
         });
+
+        function loadEstados() {
+            // Simulação de dados - em produção, fazer requisição AJAX
+            estados = [
+                {id: 1, nome: 'São Paulo', uf: 'SP'},
+                {id: 2, nome: 'Rio de Janeiro', uf: 'RJ'},
+                {id: 3, nome: 'Minas Gerais', uf: 'MG'},
+                {id: 4, nome: 'Bahia', uf: 'BA'}
+            ];
+
+            const estadoSelect = document.getElementById('estado');
+            estadoSelect.innerHTML = '<option value="">Selecione o estado</option>';
+            
+            estados.forEach(estado => {
+                const option = document.createElement('option');
+                option.value = estado.id;
+                option.textContent = `${estado.nome} (${estado.uf})`;
+                estadoSelect.appendChild(option);
+            });
+        }
+
+        function loadMunicipios() {
+            const estadoId = document.getElementById('estado').value;
+            const municipioSelect = document.getElementById('municipio');
+            
+            if (!estadoId) {
+                municipioSelect.innerHTML = '<option value="">Selecione o município</option>';
+                municipioSelect.disabled = true;
+                document.getElementById('unidadesBtn').disabled = true;
+                return;
+            }
+
+            // Simulação de dados - em produção, fazer requisição AJAX
+            municipios = [
+                {id: 1, nome: 'São Paulo', estado_id: 1},
+                {id: 2, nome: 'Campinas', estado_id: 1},
+                {id: 3, nome: 'Santos', estado_id: 1},
+                {id: 4, nome: 'Rio de Janeiro', estado_id: 2},
+                {id: 5, nome: 'Niterói', estado_id: 2}
+            ].filter(municipio => municipio.estado_id == estadoId);
+
+            municipioSelect.innerHTML = '<option value="">Selecione o município</option>';
+            municipios.forEach(municipio => {
+                const option = document.createElement('option');
+                option.value = municipio.id;
+                option.textContent = municipio.nome;
+                municipioSelect.appendChild(option);
+            });
+
+            municipioSelect.disabled = false;
+        }
+
+        function loadUnidades() {
+            const municipioId = document.getElementById('municipio').value;
+            
+            if (!municipioId) {
+                document.getElementById('unidadesBtn').disabled = true;
+                return;
+            }
+
+            // Simulação de dados - em produção, fazer requisição AJAX
+            unidades = [
+                {id: 1, nome: 'ETA Guarapiranga', municipio_id: 1},
+                {id: 2, nome: 'ETA Cantareira', municipio_id: 1},
+                {id: 3, nome: 'ETA Campinas Centro', municipio_id: 2},
+                {id: 4, nome: 'ETA Santos Litoral', municipio_id: 3}
+            ].filter(unidade => unidade.municipio_id == municipioId);
+
+            document.getElementById('unidadesBtn').disabled = false;
+        }
+
+        function checkUserPermissions() {
+            // Verificar se o usuário logado tem permissão para cadastrar outros usuários
+            // e quais níveis de permissão ele pode atribuir
+            const userLevel = 3; // Simulação - pegar do backend
+            const hasExtraAccess = true; // Simulação - pegar do backend
+
+            const roleSelect = document.getElementById('role');
+            
+            if (userLevel === 3 && !hasExtraAccess) {
+                // Usuário nível 3 normal só pode criar usuários nível 1 e 2
+                roleSelect.innerHTML = `
+                    <option value="">Selecione as permissões</option>
+                    <option value="1">Nível 1 - Visualização</option>
+                    <option value="2">Nível 2 - Operacional</option>
+                `;
+            }
+        }
+
+        function openUnidadesModal() {
+            const modal = document.getElementById('unidadesModal');
+            
+            // Carregar unidades no modal
+            const unidadesList = document.getElementById('unidadesList');
+            unidadesList.innerHTML = '';
+
+            unidades.forEach(unidade => {
+                const unidadeItem = document.createElement('div');
+                unidadeItem.className = 'equipment-item';
+                unidadeItem.innerHTML = `
+                    <input type="checkbox" id="unidade_${unidade.id}" name="unidades[]" value="${unidade.id}" 
+                           ${selectedUnidades.includes(unidade.id) ? 'checked' : ''}>
+                    <label for="unidade_${unidade.id}">${unidade.nome}</label>
+                `;
+                unidadesList.appendChild(unidadeItem);
+            });
+
+            // Carregar municípios no filtro
+            const filterMunicipio = document.getElementById('filterMunicipio');
+            filterMunicipio.innerHTML = '<option value="">Todos os municípios</option>';
+            municipios.forEach(municipio => {
+                const option = document.createElement('option');
+                option.value = municipio.id;
+                option.textContent = municipio.nome;
+                filterMunicipio.appendChild(option);
+            });
+
+            modal.style.display = 'block';
+        }
+
+        function closeUnidadesModal() {
+            document.getElementById('unidadesModal').style.display = 'none';
+        }
+
+        function filterUnidadesByMunicipio() {
+            const filterValue = document.getElementById('filterMunicipio').value;
+            const unidadeItems = document.querySelectorAll('#unidadesList .equipment-item');
+            
+            unidadeItems.forEach(item => {
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                const unidadeId = parseInt(checkbox.value);
+                const unidade = unidades.find(u => u.id === unidadeId);
+                
+                if (!filterValue || unidade.municipio_id == filterValue) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function saveUnidadesSelection() {
+            const checkboxes = document.querySelectorAll('#unidadesModal input[type="checkbox"]:checked');
+            selectedUnidades = Array.from(checkboxes).map(cb => parseInt(cb.value));
+            
+            const selectedList = document.getElementById('selectedUnidades');
+            selectedList.innerHTML = '';
+            
+            if (selectedUnidades.length > 0) {
+                selectedUnidades.forEach(unidadeId => {
+                    const unidade = unidades.find(u => u.id === unidadeId);
+                    const unidadeTag = document.createElement('span');
+                    unidadeTag.className = 'equipment-tag';
+                    unidadeTag.textContent = unidade.nome;
+                    selectedList.appendChild(unidadeTag);
+                });
+            } else {
+                selectedList.innerHTML = '<span class="no-equipment">Nenhuma unidade selecionada</span>';
+            }
+
+            closeUnidadesModal();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('unidadesModal');
+            if (event.target == modal) {
+                closeUnidadesModal();
+            }
+        }
     </script>
 </body>
 </html>
