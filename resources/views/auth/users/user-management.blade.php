@@ -121,7 +121,7 @@
                                             </svg>
                                             Editar
                                         </a>
-                                        <form method="POST" action="{{ route('users.toggle', $user->id) }}" style="display: inline;">
+                                        <form method="POST" action="{{ route('users.toggle', $user->id) }}" style="display: inline;" onsubmit="return confirmToggle(event, '{{ $user->name }}', {{ $user->status ? 'true' : 'false' }})">
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" class="btn-sm btn-toggle {{ !$user->status ? 'inactive' : '' }}">
@@ -132,7 +132,7 @@
                                                 {{ $user->status ? 'Desativar' : 'Ativar' }}
                                             </button>
                                         </form>
-                                        <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir este usuário?')">
+                                        <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display: inline;" onsubmit="return confirmDelete(event, '{{ $user->name }}')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn-sm btn-delete">
@@ -170,3 +170,266 @@
 </body>
 </html>
 
+
+    <!-- Modal de Confirmação de Exclusão -->
+    <div id="deleteModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão de Usuário</h3>
+                <span class="close" onclick="closeDeleteModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Você está prestes a excluir o usuário <strong id="deleteUserName"></strong>.</p>
+                <p>Esta ação é <strong>irreversível</strong> e removerá permanentemente todos os dados do usuário.</p>
+                
+                <div class="confirmation-input">
+                    <label for="deleteConfirmation">Para confirmar, digite a frase abaixo:</label>
+                    <p class="confirmation-phrase">"Estou ciente e desejo remover este usuário!"</p>
+                    <input 
+                        type="text" 
+                        id="deleteConfirmation" 
+                        placeholder="Digite a frase de confirmação..."
+                        autocomplete="off"
+                        onpaste="return false"
+                        ondrop="return false"
+                        style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ddd; border-radius: 4px;"
+                    >
+                    <div id="deleteError" style="color: red; margin-top: 5px; display: none;">
+                        A frase digitada não confere. Digite exatamente como mostrado acima.
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeDeleteModal()">Cancelar</button>
+                <button type="button" class="btn-danger" onclick="confirmDeleteAction()" id="confirmDeleteBtn" disabled>
+                    Excluir Usuário
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação de Desativação -->
+    <div id="toggleModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="toggleModalTitle">Confirmar Ação</h3>
+                <span class="close" onclick="closeToggleModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="toggleModalMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeToggleModal()">Cancelar</button>
+                <button type="button" class="btn-primary" onclick="confirmToggleAction()" id="confirmToggleBtn">
+                    Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDeleteForm = null;
+        let currentToggleForm = null;
+        const requiredPhrase = "Estou ciente e desejo remover este usuário!";
+
+        function confirmDelete(event, userName) {
+            event.preventDefault();
+            currentDeleteForm = event.target;
+            
+            document.getElementById('deleteUserName').textContent = userName;
+            document.getElementById('deleteConfirmation').value = '';
+            document.getElementById('deleteError').style.display = 'none';
+            document.getElementById('confirmDeleteBtn').disabled = true;
+            document.getElementById('deleteModal').style.display = 'block';
+            
+            return false;
+        }
+
+        function confirmToggle(event, userName, isActive) {
+            event.preventDefault();
+            currentToggleForm = event.target;
+            
+            const action = isActive ? 'desativar' : 'ativar';
+            const title = isActive ? 'Desativar Usuário' : 'Ativar Usuário';
+            const message = `Tem certeza que deseja ${action} o usuário ${userName}?`;
+            
+            document.getElementById('toggleModalTitle').textContent = title;
+            document.getElementById('toggleModalMessage').textContent = message;
+            document.getElementById('toggleModal').style.display = 'block';
+            
+            return false;
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+            currentDeleteForm = null;
+        }
+
+        function closeToggleModal() {
+            document.getElementById('toggleModal').style.display = 'none';
+            currentToggleForm = null;
+        }
+
+        function confirmDeleteAction() {
+            const inputValue = document.getElementById('deleteConfirmation').value;
+            const errorDiv = document.getElementById('deleteError');
+            
+            if (inputValue === requiredPhrase) {
+                if (currentDeleteForm) {
+                    currentDeleteForm.submit();
+                }
+                closeDeleteModal();
+            } else {
+                errorDiv.style.display = 'block';
+            }
+        }
+
+        function confirmToggleAction() {
+            if (currentToggleForm) {
+                currentToggleForm.submit();
+            }
+            closeToggleModal();
+        }
+
+        // Verificar se a frase está correta em tempo real
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteInput = document.getElementById('deleteConfirmation');
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+            const errorDiv = document.getElementById('deleteError');
+            
+            if (deleteInput) {
+                deleteInput.addEventListener('input', function() {
+                    const inputValue = this.value;
+                    
+                    if (inputValue === requiredPhrase) {
+                        confirmBtn.disabled = false;
+                        errorDiv.style.display = 'none';
+                        this.style.borderColor = '#28a745';
+                    } else {
+                        confirmBtn.disabled = true;
+                        this.style.borderColor = '#dc3545';
+                        
+                        if (inputValue.length > 0) {
+                            errorDiv.style.display = 'block';
+                        } else {
+                            errorDiv.style.display = 'none';
+                        }
+                    }
+                });
+            }
+        });
+
+        // Fechar modais ao clicar fora
+        window.onclick = function(event) {
+            const deleteModal = document.getElementById('deleteModal');
+            const toggleModal = document.getElementById('toggleModal');
+            
+            if (event.target == deleteModal) {
+                closeDeleteModal();
+            }
+            if (event.target == toggleModal) {
+                closeToggleModal();
+            }
+        }
+    </script>
+
+    <style>
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 0;
+            border: none;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+        }
+
+        .confirmation-phrase {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-left: 4px solid #007bff;
+            margin: 10px 0;
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-danger:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>

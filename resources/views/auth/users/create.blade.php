@@ -114,17 +114,47 @@
                     
                     <div class="form-row">
                         <div class="input-group">
-                            <label for="company">Empresa</label>
-                            <input 
-                                type="text" 
-                                id="company" 
-                                name="company" 
-                                class="form-control {{ $errors->has('company') ? 'error' : '' }}" 
-                                placeholder="Nome da empresa"
-                                value="{{ old('company') }}"
+                            <label for="estado">Estado</label>
+                            <select 
+                                id="estado" 
+                                name="estado" 
+                                class="form-control {{ $errors->has('estado') ? 'error' : '' }}"
                                 required
+                                onchange="loadMunicipios()"
                             >
-                            @error('company')
+                                <option value="">Selecione o estado</option>
+                                <!-- Estados serão carregados dinamicamente -->
+                            </select>
+                            @error('estado')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group">
+                            <label for="municipio">Município</label>
+                            <select 
+                                id="municipio" 
+                                name="municipio" 
+                                class="form-control {{ $errors->has('municipio') ? 'error' : '' }}"
+                                required
+                                onchange="loadUnidades()"
+                                disabled
+                            >
+                                <option value="">Selecione o município</option>
+                            </select>
+                            @error('municipio')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="unidades">Unidades de Acesso</label>
+                            <button type="button" class="equipment-btn" onclick="openUnidadesModal()" id="unidadesBtn" disabled>
+                                Selecionar Unidades
+                            </button>
+                            <div id="selectedUnidades" class="selected-equipment-list"></div>
+                            @error('unidades')
                                 <div class="error-message">{{ $message }}</div>
                             @enderror
                         </div>
@@ -137,9 +167,10 @@
                                 required
                             >
                                 <option value="">Selecione as permissões</option>
-                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrador</option>
-                                <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Usuário</option>
-                                <option value="viewer" {{ old('role') == 'viewer' ? 'selected' : '' }}>Visualizador</option>
+                                <option value="1" {{ old('role') == '1' ? 'selected' : '' }}>Nível 1 - Visualização</option>
+                                <option value="2" {{ old('role') == '2' ? 'selected' : '' }}>Nível 2 - Operacional</option>
+                                <option value="3" {{ old('role') == '3' ? 'selected' : '' }}>Nível 3 - Gestor</option>
+                                <option value="3_extra" {{ old('role') == '3_extra' ? 'selected' : '' }}>Nível 3 - Gestor com Permissão Extra</option>
                             </select>
                             @error('role')
                                 <div class="error-message">{{ $message }}</div>
@@ -147,64 +178,9 @@
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label for="password">Senha</label>
-                            <input 
-                                type="password" 
-                                id="password" 
-                                name="password" 
-                                class="form-control {{ $errors->has('password') ? 'error' : '' }}" 
-                                placeholder="Digite uma senha segura"
-                                required
-                            >
-                            @error('password')
-                                <div class="error-message">{{ $message }}</div>
-                            @enderror
-                            
-                            <div class="password-requirements">
-                                <h4>Requisitos da senha:</h4>
-                                <ul id="passwordRequirements">
-                                    <li id="length" class="invalid">
-                                        <span>✗</span> Mínimo de 8 caracteres
-                                    </li>
-                                    <li id="uppercase" class="invalid">
-                                        <span>✗</span> Pelo menos uma letra maiúscula
-                                    </li>
-                                    <li id="lowercase" class="invalid">
-                                        <span>✗</span> Pelo menos uma letra minúscula
-                                    </li>
-                                    <li id="number" class="invalid">
-                                        <span>✗</span> Pelo menos um número
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label for="password_confirmation">Confirmar Senha</label>
-                            <input 
-                                type="password" 
-                                id="password_confirmation" 
-                                name="password_confirmation" 
-                                class="form-control {{ $errors->has('password_confirmation') ? 'error' : '' }}" 
-                                placeholder="Digite a senha novamente"
-                                required
-                            >
-                            @error('password_confirmation')
-                                <div class="error-message">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
+                    <!-- Senha será gerada automaticamente e enviada por e-mail -->
 
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label for="equipment">Equipamentos</label>
-                            <button type="button" class="equipment-btn" onclick="openEquipmentModal()">
-                                Selecionar Equipamentos
-                            </button>
-                            <div id="selectedEquipments" class="selected-equipment-list"></div>
-                        </div>
-                    </div>
+                    <!-- Equipamentos são vinculados às unidades automaticamente -->
 
                     <button type="submit" class="register-btn" id="submitBtn">Cadastrar Novo Usuário</button>
                 </form>
@@ -212,133 +188,40 @@
         </div>
     </div>
 
-    <!-- Modal de Equipamentos -->
-    <div id="equipmentModal" class="modal">
+    <!-- Modal de Unidades -->
+    <div id="unidadesModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Selecionar Equipamentos</h3>
-                <span class="close" onclick="closeEquipmentModal()">&times;</span>
+                <h3>Selecionar Unidades de Acesso</h3>
+                <span class="close" onclick="closeUnidadesModal()">&times;</span>
             </div>
             <div class="modal-body">
-                <div class="equipment-list">
-                    <!-- Lista de equipamentos será carregada aqui -->
-                    <div class="equipment-item">
-                        <input type="checkbox" id="eq1" name="equipment[]" value="1">
-                        <label for="eq1">Sensor de Temperatura - ST001</label>
-                        <span class="equipment-status active">Ativo</span>
+                <div class="filters-modal">
+                    <div class="form-group">
+                        <label for="filterMunicipio">Filtrar por Município:</label>
+                        <select id="filterMunicipio" onchange="filterUnidadesByMunicipio()">
+                            <option value="">Todos os municípios</option>
+                        </select>
                     </div>
-                    <div class="equipment-item">
-                        <input type="checkbox" id="eq2" name="equipment[]" value="2">
-                        <label for="eq2">Sensor de Umidade - SU002</label>
-                        <span class="equipment-status inactive">Inativo</span>
-                    </div>
-                    <div class="equipment-item">
-                        <input type="checkbox" id="eq3" name="equipment[]" value="3">
-                        <label for="eq3">Medidor de pH - MP003</label>
-                        <span class="equipment-status active">Ativo</span>
-                    </div>
-                    <div class="equipment-item">
-                        <input type="checkbox" id="eq4" name="equipment[]" value="4">
-                        <label for="eq4">Sensor de Pressão - SP004</label>
-                        <span class="equipment-status active">Ativo</span>
-                    </div>
-                    <div class="equipment-item">
-                        <input type="checkbox" id="eq5" name="equipment[]" value="5">
-                        <label for="eq5">Turbidímetro - TB005</label>
-                        <span class="equipment-status inactive">Inativo</span>
-                    </div>
+                </div>
+                <div class="unidades-list" id="unidadesList">
+                    <!-- Lista de unidades será carregada aqui dinamicamente -->
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-secondary" onclick="closeEquipmentModal()">Cancelar</button>
-                <button type="button" class="btn-primary" onclick="saveEquipmentSelection()">Confirmar Seleção</button>
+                <button type="button" class="btn-secondary" onclick="closeUnidadesModal()">Cancelar</button>
+                <button type="button" class="btn-primary" onclick="saveUnidadesSelection()">Confirmar Seleção</button>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const passwordInput = document.getElementById('password');
-            const confirmPasswordInput = document.getElementById('password_confirmation');
-            const submitBtn = document.getElementById('submitBtn');
-            
-            // Password validation
-            passwordInput.addEventListener('input', function() {
-                const password = this.value;
-                
-                // Length check
-                const lengthCheck = document.getElementById('length');
-                if (password.length >= 8) {
-                    lengthCheck.classList.remove('invalid');
-                    lengthCheck.classList.add('valid');
-                    lengthCheck.querySelector('span').textContent = '✓';
-                } else {
-                    lengthCheck.classList.remove('valid');
-                    lengthCheck.classList.add('invalid');
-                    lengthCheck.querySelector('span').textContent = '✗';
-                }
-                
-                // Uppercase check
-                const uppercaseCheck = document.getElementById('uppercase');
-                if (/[A-Z]/.test(password)) {
-                    uppercaseCheck.classList.remove('invalid');
-                    uppercaseCheck.classList.add('valid');
-                    uppercaseCheck.querySelector('span').textContent = '✓';
-                } else {
-                    uppercaseCheck.classList.remove('valid');
-                    uppercaseCheck.classList.add('invalid');
-                    uppercaseCheck.querySelector('span').textContent = '✗';
-                }
-                
-                // Lowercase check
-                const lowercaseCheck = document.getElementById('lowercase');
-                if (/[a-z]/.test(password)) {
-                    lowercaseCheck.classList.remove('invalid');
-                    lowercaseCheck.classList.add('valid');
-                    lowercaseCheck.querySelector('span').textContent = '✓';
-                } else {
-                    lowercaseCheck.classList.remove('valid');
-                    lowercaseCheck.classList.add('invalid');
-                    lowercaseCheck.querySelector('span').textContent = '✗';
-                }
-                
-                // Number check
-                const numberCheck = document.getElementById('number');
-                if (/[0-9]/.test(password)) {
-                    numberCheck.classList.remove('invalid');
-                    numberCheck.classList.add('valid');
-                    numberCheck.querySelector('span').textContent = '✓';
-                } else {
-                    numberCheck.classList.remove('valid');
-                    numberCheck.classList.add('invalid');
-                    numberCheck.querySelector('span').textContent = '✗';
-                }
-            });
-            
-            // Form validation
-            document.getElementById('userForm').addEventListener('submit', function(e) {
-                const password = passwordInput.value;
-                const confirmPassword = confirmPasswordInput.value;
-                
-                // Check password requirements
-                const hasMinLength = password.length >= 8;
-                const hasUppercase = /[A-Z]/.test(password);
-                const hasLowercase = /[a-z]/.test(password);
-                const hasNumber = /[0-9]/.test(password);
-                
-                if (!hasMinLength || !hasUppercase || !hasLowercase || !hasNumber) {
-                    e.preventDefault();
-                    alert('Por favor, atenda a todos os requisitos de senha.');
-                    return false;
-                }
-                
-                if (password !== confirmPassword) {
-                    e.preventDefault();
-                    alert('As senhas não coincidem.');
-                    return false;
-                }
-            });
+        let estados = [];
+        let municipios = [];
+        let unidades = [];
+        let selectedUnidades = [];
 
+        document.addEventListener('DOMContentLoaded', function() {
             // CPF mask
             document.getElementById('cpf').addEventListener('input', function(e) {
                 let value = e.target.value.replace(/\D/g, '');
@@ -347,53 +230,183 @@
                 value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
                 e.target.value = value;
             });
+
+            // Carregar estados
+            loadEstados();
+
+            // Verificar permissões do usuário logado para habilitar/desabilitar opções
+            checkUserPermissions();
         });
 
-        function openEquipmentModal() {
-            document.getElementById('equipmentModal').style.display = 'block';
-        }
+        function loadEstados() {
+            // Simulação de dados - em produção, fazer requisição AJAX
+            estados = [
+                {id: 1, nome: 'São Paulo', uf: 'SP'},
+                {id: 2, nome: 'Rio de Janeiro', uf: 'RJ'},
+                {id: 3, nome: 'Minas Gerais', uf: 'MG'},
+                {id: 4, nome: 'Bahia', uf: 'BA'}
+            ];
 
-        function closeEquipmentModal() {
-            document.getElementById('equipmentModal').style.display = 'none';
-        }
-
-        function saveEquipmentSelection() {
-            const selectedEquipments = [];
-            const checkboxes = document.querySelectorAll('#equipmentModal input[type="checkbox"]:checked');
+            const estadoSelect = document.getElementById('estado');
+            estadoSelect.innerHTML = '<option value="">Selecione o estado</option>';
             
-            checkboxes.forEach(checkbox => {
-                const label = checkbox.nextElementSibling.textContent;
-                selectedEquipments.push({
-                    id: checkbox.value,
-                    name: label
-                });
+            estados.forEach(estado => {
+                const option = document.createElement('option');
+                option.value = estado.id;
+                option.textContent = `${estado.nome} (${estado.uf})`;
+                estadoSelect.appendChild(option);
             });
+        }
 
-            const selectedList = document.getElementById('selectedEquipments');
-            selectedList.innerHTML = '';
+        function loadMunicipios() {
+            const estadoId = document.getElementById('estado').value;
+            const municipioSelect = document.getElementById('municipio');
             
-            if (selectedEquipments.length > 0) {
-                selectedEquipments.forEach(equipment => {
-                    const equipmentTag = document.createElement('span');
-                    equipmentTag.className = 'equipment-tag';
-                    equipmentTag.textContent = equipment.name;
-                    selectedList.appendChild(equipmentTag);
-                });
-            } else {
-                selectedList.innerHTML = '<span class="no-equipment">Nenhum equipamento selecionado</span>';
+            if (!estadoId) {
+                municipioSelect.innerHTML = '<option value="">Selecione o município</option>';
+                municipioSelect.disabled = true;
+                document.getElementById('unidadesBtn').disabled = true;
+                return;
             }
 
-            closeEquipmentModal();
+            // Simulação de dados - em produção, fazer requisição AJAX
+            municipios = [
+                {id: 1, nome: 'São Paulo', estado_id: 1},
+                {id: 2, nome: 'Campinas', estado_id: 1},
+                {id: 3, nome: 'Santos', estado_id: 1},
+                {id: 4, nome: 'Rio de Janeiro', estado_id: 2},
+                {id: 5, nome: 'Niterói', estado_id: 2}
+            ].filter(municipio => municipio.estado_id == estadoId);
+
+            municipioSelect.innerHTML = '<option value="">Selecione o município</option>';
+            municipios.forEach(municipio => {
+                const option = document.createElement('option');
+                option.value = municipio.id;
+                option.textContent = municipio.nome;
+                municipioSelect.appendChild(option);
+            });
+
+            municipioSelect.disabled = false;
+        }
+
+        function loadUnidades() {
+            const municipioId = document.getElementById('municipio').value;
+            
+            if (!municipioId) {
+                document.getElementById('unidadesBtn').disabled = true;
+                return;
+            }
+
+            // Simulação de dados - em produção, fazer requisição AJAX
+            unidades = [
+                {id: 1, nome: 'ETA Guarapiranga', municipio_id: 1},
+                {id: 2, nome: 'ETA Cantareira', municipio_id: 1},
+                {id: 3, nome: 'ETA Campinas Centro', municipio_id: 2},
+                {id: 4, nome: 'ETA Santos Litoral', municipio_id: 3}
+            ].filter(unidade => unidade.municipio_id == municipioId);
+
+            document.getElementById('unidadesBtn').disabled = false;
+        }
+
+        function checkUserPermissions() {
+            // Verificar se o usuário logado tem permissão para cadastrar outros usuários
+            // e quais níveis de permissão ele pode atribuir
+            const userLevel = 3; // Simulação - pegar do backend
+            const hasExtraAccess = true; // Simulação - pegar do backend
+
+            const roleSelect = document.getElementById('role');
+            
+            if (userLevel === 3 && !hasExtraAccess) {
+                // Usuário nível 3 normal só pode criar usuários nível 1 e 2
+                roleSelect.innerHTML = `
+                    <option value="">Selecione as permissões</option>
+                    <option value="1">Nível 1 - Visualização</option>
+                    <option value="2">Nível 2 - Operacional</option>
+                `;
+            }
+        }
+
+        function openUnidadesModal() {
+            const modal = document.getElementById('unidadesModal');
+            
+            // Carregar unidades no modal
+            const unidadesList = document.getElementById('unidadesList');
+            unidadesList.innerHTML = '';
+
+            unidades.forEach(unidade => {
+                const unidadeItem = document.createElement('div');
+                unidadeItem.className = 'equipment-item';
+                unidadeItem.innerHTML = `
+                    <input type="checkbox" id="unidade_${unidade.id}" name="unidades[]" value="${unidade.id}" 
+                           ${selectedUnidades.includes(unidade.id) ? 'checked' : ''}>
+                    <label for="unidade_${unidade.id}">${unidade.nome}</label>
+                `;
+                unidadesList.appendChild(unidadeItem);
+            });
+
+            // Carregar municípios no filtro
+            const filterMunicipio = document.getElementById('filterMunicipio');
+            filterMunicipio.innerHTML = '<option value="">Todos os municípios</option>';
+            municipios.forEach(municipio => {
+                const option = document.createElement('option');
+                option.value = municipio.id;
+                option.textContent = municipio.nome;
+                filterMunicipio.appendChild(option);
+            });
+
+            modal.style.display = 'block';
+        }
+
+        function closeUnidadesModal() {
+            document.getElementById('unidadesModal').style.display = 'none';
+        }
+
+        function filterUnidadesByMunicipio() {
+            const filterValue = document.getElementById('filterMunicipio').value;
+            const unidadeItems = document.querySelectorAll('#unidadesList .equipment-item');
+            
+            unidadeItems.forEach(item => {
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                const unidadeId = parseInt(checkbox.value);
+                const unidade = unidades.find(u => u.id === unidadeId);
+                
+                if (!filterValue || unidade.municipio_id == filterValue) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function saveUnidadesSelection() {
+            const checkboxes = document.querySelectorAll('#unidadesModal input[type="checkbox"]:checked');
+            selectedUnidades = Array.from(checkboxes).map(cb => parseInt(cb.value));
+            
+            const selectedList = document.getElementById('selectedUnidades');
+            selectedList.innerHTML = '';
+            
+            if (selectedUnidades.length > 0) {
+                selectedUnidades.forEach(unidadeId => {
+                    const unidade = unidades.find(u => u.id === unidadeId);
+                    const unidadeTag = document.createElement('span');
+                    unidadeTag.className = 'equipment-tag';
+                    unidadeTag.textContent = unidade.nome;
+                    selectedList.appendChild(unidadeTag);
+                });
+            } else {
+                selectedList.innerHTML = '<span class="no-equipment">Nenhuma unidade selecionada</span>';
+            }
+
+            closeUnidadesModal();
         }
 
         // Close modal when clicking outside
         window.onclick = function(event) {
-            const modal = document.getElementById('equipmentModal');
+            const modal = document.getElementById('unidadesModal');
             if (event.target == modal) {
-                closeEquipmentModal();
+                closeUnidadesModal();
             }
         }
     </script>
 </body>
 </html>
-
