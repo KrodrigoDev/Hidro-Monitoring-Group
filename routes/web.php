@@ -23,3 +23,15 @@ Route::get('/esqueci-senha', function () {
 Route::get('/redefinir-senha', function () {
     return view('auth.reset-password');
 });
+
+Route::get("/suporte", function () {
+    return view("support");
+})->name("support");
+
+Route::get("/historico-de-equipamento", function () {
+    return view("equipment-history");
+})->name("equipment.history");
+
+Route::get("/equipment-restore", function () {
+    return view("equipment-restore");
+})->name("equipment.restore");

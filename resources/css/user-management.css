@@ -29,8 +29,6 @@ header {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 30px 30px; 
-    /* --- ÍCONE PADRÃO --- */
-    /* Verifique se este caminho está correto após o build do Vite */
     background-image: url('../assets/ICON/returnICON.svg');
 
     transition: background-image 0.0s ease-in-out;
