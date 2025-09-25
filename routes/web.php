@@ -32,6 +32,6 @@ Route::get("/historico-de-equipamento", function () {
     return view("equipment-history");
 })->name("equipment.history");
 
-Route::get("/equipment-restore", function () {
-    return view("equipment-restore");
-})->name("equipment.restore");
+Route::get("/gestao-de-equipamentos", function () {
+    return view("equipment-management");
+})->name("equipment.management");

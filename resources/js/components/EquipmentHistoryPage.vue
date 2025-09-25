@@ -1,27 +1,9 @@
 <template>
   <div class="min-h-screen bg-white p-0">
-    <header>
-      <button class="return-btn mr-auto" @click="goBack"></button>
-      <img :src="contrasteIcon" alt="Contraste">
-      <p>Alto Contraste</p>
-    </header>
+
 
     <div class="p-6">
       <div class="max-w-7xl mx-auto">
-        <div class="bg-[#EBF7F7] rounded-lg shadow-lg p-6 mb-6">
-          <div class="flex items-center space-x-4">
-            <div class="bg-white p-3 rounded-full">
-              <svg class="w-8 h-8 text-[#162C39]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
-              </svg>
-            </div>
-            <div>
-              <h1 class="text-3xl font-bold text-[#162C39]">Histórico de Equipamentos</h1>
-              <p class="text-gray-600">Visualize o histórico completo de manutenções dos equipamentos</p>
-            </div>
-          </div>
-        </div>
-
         <div class="bg-[#EBF7F7] rounded-lg shadow-lg p-6 mb-6">
           <h2 class="text-xl font-semibold text-[#162C39] mb-4">Filtros de Busca</h2>
           
@@ -568,34 +550,5 @@ export default {
 </script>
 
 <style scoped>
-header {
-  width: 100%; 
-  height: 64px;
-  padding: 15px 30px;
-  display: flex;
-  justify-content: right;
-  gap: 5px;
-  align-items: center;
-  background-color: #EBF7F7;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  box-sizing: border-box; 
-}
 
-.return-btn.mr-auto {
-  width: 40px;
-  height: 40px;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 30px 30px; 
-  background-image: url('../../assets/ICON/returnICON.svg');
-  transition: background-image 0.0s ease-in-out;
-}
-
-.return-btn.mr-auto:hover {
-  background-image: url('../../assets/ICON/backIntICON.svg');
-  background-size: 40px 40px; 
-}
 </style>

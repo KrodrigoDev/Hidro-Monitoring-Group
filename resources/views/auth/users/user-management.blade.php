@@ -433,3 +433,27 @@
             cursor: pointer;
         }
     </style>
+)
+            <div style="margin-top: 1.5rem; display: flex; justify-content: center;">
+                {{ $users->links() }}
+            </div>
+        @endif
+    </div>
+</body>
+</html>
+
+te('users.create') }}" class="btn-primary" style="margin-top: 1rem;">
+                        Cadastrar Primeiro Usuário
+                    </a>
+                </div>
+            @endif
+        </div>
+
+        @if($users->hasPages())
+            <div style="margin-top: 1.5rem; display: flex; justify-content: center;">
+                {{ $users->links() }}
+            </div>
+        @endif
+    </div>
+</body>
+</html>
