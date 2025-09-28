@@ -7,6 +7,9 @@ import { createApp } from 'vue';
 import SupportPage from './components/SupportPage.vue';
 import EquipmentHistoryPage from './components/EquipmentHistoryPage.vue';
 import EquipmentManagementPage from './components/EquipmentManagementPage.vue';
+import ForgotPasswordPage from './components/ForgotPasswordPage.vue';
+import ResetPasswordPage from './components/ResetPasswordPage.vue';
+import PasswordResetSuccessPage from './components/PasswordResetSuccessPage.vue';
 
 const app = createApp({});
 
@@ -14,9 +17,14 @@ const app = createApp({});
 app.component('support-page', SupportPage);
 app.component('equipment-history-page', EquipmentHistoryPage);
 app.component('equipment-management-page', EquipmentManagementPage);
+app.component('forgot-password-page', ForgotPasswordPage);
+app.component('reset-password-page', ResetPasswordPage);
+app.component('password-reset-success-page', PasswordResetSuccessPage);
 
 // Montar a aplicação se o elemento #app existir
 const appElement = document.getElementById('app');
 if (appElement) {
     app.mount('#app');
 }
+
+
