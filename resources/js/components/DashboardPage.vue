@@ -2,17 +2,36 @@
   <div class="min-h-screen" style="background-color: #EBF7F7;">
     <!-- Header -->
     <header class="shadow-sm border-b border-gray-200" style="background-color: #EBF7F7;">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-end items-center h-16">
-          <div class="flex items-center space-x-4">
+      <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center h-16">
+          <div class="flex items-center space-x-4 ml-auto">
             <!-- User Menu -->
             <div class="relative">
-              <button class="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
+              <button @click="toggleUserMenu" class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 focus:outline-none">
                 <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                   <span class="text-white text-sm font-medium">U</span>
                 </div>
                 <span class="text-sm font-medium">Usuário</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
               </button>
+              <!-- User Dropdown Menu -->
+              <div v-if="showUserMenu" class="absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
+                <a href="/profile" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                  </svg>
+                  Editar Perfil
+                </a>
+                <hr class="my-1">
+                <a href="/logout" class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                  <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                  </svg>
+                  Sair
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -21,12 +40,11 @@
 
     <div class="flex">
       <!-- Sidebar -->
-      <aside class="w-64 shadow-lg min-h-screen" style="background-color: #EBF7F7;">
-        <!-- Sidebar Header -->
-        <div class="flex items-center justify-center h-16 px-4 border-b border-gray-200">
-          <img src="../../assets/ICON/logo2.svg" alt="Logo" class="w-[211px] h-[150px]">
-        </div>
-        <nav class="mt-8">
+      <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" 
+             class="fixed inset-y-0 left-0 z-40 w-64 shadow-lg min-h-screen transition-transform lg:translate-x-0 lg:static lg:inset-0" 
+             style="background-color: #EBF7F7;">
+        <nav class="mt-6">
+          <img src="../../assets/ICON/logo2.svg" alt="Logo" class="w-[211px] h-[100px] mx-auto mb-6">
           <div class="px-4">
             <ul class="space-y-2">
               <li>
@@ -75,128 +93,136 @@
         </nav>
       </aside>
 
+      <!-- Overlay for mobile -->
+      <div v-if="sidebarOpen" @click="toggleSidebar" class="fixed inset-0 z-30 bg-black bg-opacity-50 lg:hidden"></div>
+
       <!-- Main Content -->
-      <main class="flex-1 p-8">
-        <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <!-- Total Equipamentos -->
-          <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-              <div class="flex-shrink-0">
-                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                  </svg>
+      <main :class="sidebarOpen ? 'lg:ml-0' : 'lg:ml-0'" class="flex-1 transition-all duration-300">
+        <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <!-- Stats Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Total Equipamentos -->
+            <div class="bg-white rounded-lg shadow p-6">
+              <div class="flex items-center">
+                <div class="flex-shrink-0">
+                  <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="ml-4">
+                  <p class="text-sm font-medium text-gray-500">Total de Equipamentos</p>
+                  <p class="text-2xl font-bold text-gray-900">{{ stats.totalEquipments }}</p>
+                  <p class="text-xs text-gray-400">100% do total</p>
                 </div>
               </div>
-              <div class="ml-4">
-                <p class="text-sm font-medium text-gray-500">Total de Equipamentos</p>
-                <p class="text-2xl font-bold text-gray-900">{{ stats.totalEquipments }}</p>
-                <p class="text-xs text-gray-400">100% do total</p>
+            </div>
+
+            <!-- Total Poços -->
+            <div class="bg-white rounded-lg shadow p-6">
+              <div class="flex items-center">
+                <div class="flex-shrink-0">
+                  <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="ml-4">
+                  <p class="text-sm font-medium text-gray-500">Total de Poços</p>
+                  <p class="text-2xl font-bold text-gray-900">{{ stats.totalWells }}</p>
+                  <p class="text-xs text-gray-400">{{ getPercentage(stats.totalWells) }}% do total</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Total Bombas -->
+            <div class="bg-white rounded-lg shadow p-6">
+              <div class="flex items-center">
+                <div class="flex-shrink-0">
+                  <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="ml-4">
+                  <p class="text-sm font-medium text-gray-500">Total de Bombas</p>
+                  <p class="text-2xl font-bold text-gray-900">{{ stats.totalPumps }}</p>
+                  <p class="text-xs text-gray-400">{{ getPercentage(stats.totalPumps) }}% do total</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reservatórios -->
+            <div class="bg-white rounded-lg shadow p-6">
+              <div class="flex items-center">
+                <div class="flex-shrink-0">
+                  <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="ml-4">
+                  <p class="text-sm font-medium text-gray-500">Reservatórios</p>
+                  <p class="text-2xl font-bold text-gray-900">{{ stats.totalReservoirs }}</p>
+                  <p class="text-xs text-gray-400">{{ getPercentage(stats.totalReservoirs) }}% do total</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Total Poços -->
-          <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-              <div class="flex-shrink-0">
-                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                  </svg>
-                </div>
-              </div>
-              <div class="ml-4">
-                <p class="text-sm font-medium text-gray-500">Total de Poços</p>
-                <p class="text-2xl font-bold text-gray-900">{{ stats.totalWells }}</p>
-                <p class="text-xs text-gray-400">{{ getPercentage(stats.totalWells) }}% do total</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Total Bombas -->
-          <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-              <div class="flex-shrink-0">
-                <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                  </svg>
-                </div>
-              </div>
-              <div class="ml-4">
-                <p class="text-sm font-medium text-gray-500">Total de Bombas</p>
-                <p class="text-2xl font-bold text-gray-900">{{ stats.totalPumps }}</p>
-                <p class="text-xs text-gray-400">{{ getPercentage(stats.totalPumps) }}% do total</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Reservatórios -->
-          <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-              <div class="flex-shrink-0">
-                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                  </svg>
-                </div>
-              </div>
-              <div class="ml-4">
-                <p class="text-sm font-medium text-gray-500">Reservatórios</p>
-                <p class="text-2xl font-bold text-gray-900">{{ stats.totalReservoirs }}</p>
-                <p class="text-xs text-gray-400">{{ getPercentage(stats.totalReservoirs) }}% do total</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Map Section -->
-        <div class="bg-white rounded-lg shadow">
-          <div class="px-6 py-4 border-b border-gray-200">
-            <div class="flex items-center justify-between">
-              <h2 class="text-lg font-medium text-gray-900">Mapa de Equipamentos</h2>
-              <div class="flex items-center space-x-4">
-                <!-- Location Filters -->
-                <div class="flex items-center space-x-2">
-                  <!-- Estado/Empresa -->
-                  <div class="relative">
-                    <button @click="toggleStateDropdown" class="flex items-center space-x-1 bg-gray-700 text-white px-3 py-1 rounded-full text-sm hover:bg-gray-800 transition-colors">
-                      <span>{{ selectedStateLabel }}</span>
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                      </svg>
-                    </button>
-                    <div v-if="showStateDropdown" class="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 min-w-[150px]">
-                      <button @click="selectState('')" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        Coruripe
+          <!-- Map Section -->
+          <div class="bg-white rounded-lg shadow">
+            <div class="px-6 py-4 border-b border-gray-200">
+              <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <h2 class="text-lg font-medium text-gray-900">Mapa de Equipamentos</h2>
+                <div class="flex flex-wrap items-center gap-3">
+                  <!-- Estado Filter -->
+                  <div class="flex items-center space-x-2">
+                    <span class="text-sm font-medium text-gray-700">Estado:</span>
+                    <div class="relative">
+                      <button @click="toggleStateDropdown" class="flex items-center space-x-1 bg-gray-700 text-white px-3 py-1 rounded-full text-sm hover:bg-gray-800 transition-colors">
+                        <span>{{ selectedStateLabel }}</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
                       </button>
-                      <button v-for="state in states" :key="state.id" @click="selectState(state.id)" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        {{ state.name }}
-                      </button>
+                      <div v-if="showStateDropdown" class="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 min-w-[150px]">
+                        <button @click="selectState('')" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          Todos os Estados
+                        </button>
+                        <button v-for="state in states" :key="state.id" @click="selectState(state.id)" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          {{ state.name }}
+                        </button>
+                      </div>
                     </div>
                   </div>
                   
-                  <!-- Município -->
-                  <div class="relative">
-                    <button @click="toggleMunicipalityDropdown" class="flex items-center space-x-1 bg-teal-500 text-white px-3 py-1 rounded-full text-sm hover:bg-teal-600 transition-colors">
-                      <span>{{ selectedMunicipalityLabel }}</span>
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                      </svg>
-                    </button>
-                    <div v-if="showMunicipalityDropdown" class="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 min-w-[180px]">
-                      <button @click="selectMunicipality('')" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        Todas as localidades
+                  <!-- Unidade Filter -->
+                  <div class="flex items-center space-x-2">
+                    <span class="text-sm font-medium text-gray-700">Unidade:</span>
+                    <div class="relative">
+                      <button @click="toggleMunicipalityDropdown" class="flex items-center space-x-1 bg-gray-700 text-white px-3 py-1 rounded-full text-sm hover:bg-gray-800 transition-colors">
+                        <span>{{ selectedMunicipalityLabel }}</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
                       </button>
-                      <button v-for="municipality in availableMunicipalities" :key="municipality.id" @click="selectMunicipality(municipality.id)" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        {{ municipality.name }}
-                      </button>
+                      <div v-if="showMunicipalityDropdown" class="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 min-w-[180px]">
+                        <button @click="selectMunicipality('')" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          Todas as Unidades
+                        </button>
+                        <button v-for="municipality in availableMunicipalities" :key="municipality.id" @click="selectMunicipality(municipality.id)" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          {{ municipality.name }}
+                        </button>
+                      </div>
                     </div>
                   </div>
                   
-                  <!-- Tipo de Equipamento -->
+                  <!-- Equipamentos Filter -->
                   <div class="relative">
                     <button @click="toggleTypeDropdown" class="flex items-center space-x-1 bg-teal-500 text-white px-3 py-1 rounded-full text-sm hover:bg-teal-600 transition-colors">
                       <span>{{ selectedTypeLabel }}</span>
@@ -206,7 +232,7 @@
                     </button>
                     <div v-if="showTypeDropdown" class="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 min-w-[150px]">
                       <button @click="selectType('')" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        Todos os tipos
+                        Todos os Equipamentos
                       </button>
                       <button v-for="type in equipmentTypes" :key="type" @click="selectType(type)" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         {{ type }}
@@ -214,7 +240,7 @@
                     </div>
                   </div>
                   
-                  <!-- Status -->
+                  <!-- Situação Filter -->
                   <div class="relative">
                     <button @click="toggleStatusDropdown" class="flex items-center space-x-1 bg-teal-500 text-white px-3 py-1 rounded-full text-sm hover:bg-teal-600 transition-colors">
                       <span>{{ selectedStatusLabel }}</span>
@@ -224,7 +250,7 @@
                     </button>
                     <div v-if="showStatusDropdown" class="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 min-w-[150px]">
                       <button @click="selectStatus('')" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        Todas as bombas
+                        Situação
                       </button>
                       <button @click="selectStatus('funcionando')" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         Funcionando
@@ -240,72 +266,72 @@
                 </div>
               </div>
             </div>
-          </div>
-          
-          <!-- Map Container -->
-          <div class="p-6">
-            <div id="map" class="w-full h-[600px] rounded-lg"></div>
-          </div>
-        </div>
-
-        <!-- Equipment Details Modal -->
-        <div v-if="selectedEquipment" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div class="bg-white rounded-lg max-w-md w-full p-6">
-            <div class="flex justify-between items-start mb-4">
-              <h3 class="text-lg font-semibold text-gray-900">{{ selectedEquipment.nome }}</h3>
-              <button @click="closeEquipmentModal" class="text-gray-400 hover:text-gray-600">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-              </button>
-            </div>
             
-            <div class="space-y-3">
-              <div>
-                <span class="text-sm font-medium text-gray-500">Código:</span>
-                <span class="ml-2 text-sm text-gray-900">{{ selectedEquipment.codigo_ativo }}</span>
+            <!-- Map Container -->
+            <div class="p-6">
+              <div id="map" class="w-full h-[600px] rounded-lg"></div>
+            </div>
+          </div>
+
+          <!-- Equipment Details Modal -->
+          <div v-if="selectedEquipment" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div class="bg-white rounded-lg max-w-md w-full p-6">
+              <div class="flex justify-between items-start mb-4">
+                <h3 class="text-lg font-semibold text-gray-900">{{ selectedEquipment.nome }}</h3>
+                <button @click="closeEquipmentModal" class="text-gray-400 hover:text-gray-600">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
               </div>
               
-              <div>
-                <span class="text-sm font-medium text-gray-500">Tipo:</span>
-                <span class="ml-2 text-sm text-gray-900">{{ selectedEquipment.tipo }}</span>
-              </div>
-              
-              <div>
-                <span class="text-sm font-medium text-gray-500">Status:</span>
-                <span :class="getStatusClass(selectedEquipment.situacao)" class="ml-2 px-2 py-1 text-xs font-medium rounded-full">
-                  {{ selectedEquipment.situacao }}
-                </span>
-              </div>
-              
-              <div>
-                <span class="text-sm font-medium text-gray-500">Localização:</span>
-                <span class="ml-2 text-sm text-gray-900">{{ selectedEquipment.localizacao }}</span>
-              </div>
-              
-              <div v-if="selectedEquipment.descricao">
-                <span class="text-sm font-medium text-gray-500">Descrição:</span>
-                <p class="mt-1 text-sm text-gray-900">{{ selectedEquipment.descricao }}</p>
-              </div>
-              
-              <div v-if="selectedEquipment.atributos && selectedEquipment.atributos.length > 0">
-                <span class="text-sm font-medium text-gray-500">Atributos:</span>
-                <div class="mt-2 space-y-1">
-                  <div v-for="attr in selectedEquipment.atributos" :key="attr.nome_atributo" class="flex justify-between text-sm">
-                    <span class="text-gray-600">{{ attr.nome_atributo }}:</span>
-                    <span class="text-gray-900">{{ attr.valor_atributo }} {{ attr.unidade_medida }}</span>
+              <div class="space-y-3">
+                <div>
+                  <span class="text-sm font-medium text-gray-500">Código:</span>
+                  <span class="ml-2 text-sm text-gray-900">{{ selectedEquipment.codigo_ativo }}</span>
+                </div>
+                
+                <div>
+                  <span class="text-sm font-medium text-gray-500">Tipo:</span>
+                  <span class="ml-2 text-sm text-gray-900">{{ selectedEquipment.tipo }}</span>
+                </div>
+                
+                <div>
+                  <span class="text-sm font-medium text-gray-500">Status:</span>
+                  <span :class="getStatusClass(selectedEquipment.situacao)" class="ml-2 px-2 py-1 text-xs font-medium rounded-full">
+                    {{ selectedEquipment.situacao }}
+                  </span>
+                </div>
+                
+                <div>
+                  <span class="text-sm font-medium text-gray-500">Localização:</span>
+                  <span class="ml-2 text-sm text-gray-900">{{ selectedEquipment.localizacao }}</span>
+                </div>
+                
+                <div v-if="selectedEquipment.descricao">
+                  <span class="text-sm font-medium text-gray-500">Descrição:</span>
+                  <p class="mt-1 text-sm text-gray-900">{{ selectedEquipment.descricao }}</p>
+                </div>
+                
+                <div v-if="selectedEquipment.atributos && selectedEquipment.atributos.length > 0">
+                  <span class="text-sm font-medium text-gray-500">Atributos:</span>
+                  <div class="mt-2 space-y-1">
+                    <div v-for="attr in selectedEquipment.atributos" :key="attr.nome_atributo" class="flex justify-between text-sm">
+                      <span class="text-gray-600">{{ attr.nome_atributo }}:</span>
+                      <span class="text-gray-900">{{ attr.valor_atributo }} {{ attr.unidade_medida }}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            
-            <div class="mt-6 flex justify-end space-x-3">
-              <button @click="closeEquipmentModal" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
-                Fechar
-              </button>
-              <button @click="editEquipment" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
-                Editar
-              </button>
+              
+              <div class="mt-6 flex justify-end space-x-3">
+                <button @click="closeEquipmentModal" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
+                  Fechar
+                </button>
+                <button @click="editEquipment" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                  Editar
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -322,6 +348,8 @@ export default {
   name: 'DashboardPage',
   data() {
     return {
+      sidebarOpen: false,
+      showUserMenu: false,
       map: null,
       markers: [],
       selectedEquipment: null,
@@ -341,19 +369,22 @@ export default {
         totalReservoirs: 24
       },
       states: [
+        { id: 'AL', name: 'Alagoas' },
         { id: 'SP', name: 'São Paulo' },
         { id: 'RJ', name: 'Rio de Janeiro' },
         { id: 'MG', name: 'Minas Gerais' },
         { id: 'BA', name: 'Bahia' }
       ],
       municipalities: [
-        { id: 1, name: 'São Paulo', state_id: 'SP' },
-        { id: 2, name: 'Campinas', state_id: 'SP' },
-        { id: 3, name: 'Santos', state_id: 'SP' },
-        { id: 4, name: 'Rio de Janeiro', state_id: 'RJ' },
-        { id: 5, name: 'Niterói', state_id: 'RJ' },
-        { id: 6, name: 'Belo Horizonte', state_id: 'MG' },
-        { id: 7, name: 'Salvador', state_id: 'BA' }
+        { id: 1, name: 'Coruripe', state_id: 'AL' },
+        { id: 2, name: 'Maceió', state_id: 'AL' },
+        { id: 3, name: 'São Paulo', state_id: 'SP' },
+        { id: 4, name: 'Campinas', state_id: 'SP' },
+        { id: 5, name: 'Santos', state_id: 'SP' },
+        { id: 6, name: 'Rio de Janeiro', state_id: 'RJ' },
+        { id: 7, name: 'Niterói', state_id: 'RJ' },
+        { id: 8, name: 'Belo Horizonte', state_id: 'MG' },
+        { id: 9, name: 'Salvador', state_id: 'BA' }
       ],
       equipmentTypes: ['Bomba', 'Poço', 'Reservatório', 'Sensor', 'Válvula'],
       equipments: [
@@ -452,26 +483,26 @@ export default {
       return this.municipalities.filter(m => m.state_id === this.selectedState)
     },
     selectedStateLabel() {
-      if (!this.selectedState) return 'Coruripe'
+      if (!this.selectedState) return 'Todos os Estados'
       const state = this.states.find(s => s.id === this.selectedState)
-      return state ? state.name : 'Coruripe'
+      return state ? state.name : 'Todos os Estados'
     },
     selectedMunicipalityLabel() {
-      if (!this.selectedMunicipality) return 'Todas as localidades'
+      if (!this.selectedMunicipality) return 'Todas as Unidades'
       const municipality = this.municipalities.find(m => m.id == this.selectedMunicipality)
-      return municipality ? municipality.name : 'Todas as localidades'
+      return municipality ? municipality.name : 'Todas as Unidades'
     },
     selectedTypeLabel() {
-      return this.selectedType || 'Todos os tipos'
+      return this.selectedType || 'Todos os Equipamentos'
     },
     selectedStatusLabel() {
-      if (!this.selectedStatus) return 'Todas as bombas'
+      if (!this.selectedStatus) return 'Situação'
       const statusMap = {
         'funcionando': 'Funcionando',
         'manutencao': 'Manutenção',
         'inativo': 'Inativo'
       }
-      return statusMap[this.selectedStatus] || 'Todas as bombas'
+      return statusMap[this.selectedStatus] || 'Situação'
     }
   },
   mounted() {
@@ -489,6 +520,12 @@ export default {
     document.removeEventListener('click', this.closeDropdowns)
   },
   methods: {
+    toggleSidebar() {
+      this.sidebarOpen = !this.sidebarOpen
+    },
+    toggleUserMenu() {
+      this.showUserMenu = !this.showUserMenu
+    },
     closeDropdowns(event) {
       // Check if click is outside dropdown elements
       if (!event.target.closest('.relative')) {
@@ -496,6 +533,7 @@ export default {
         this.showMunicipalityDropdown = false
         this.showTypeDropdown = false
         this.showStatusDropdown = false
+        this.showUserMenu = false
       }
     },
     getPercentage(value) {
@@ -745,5 +783,9 @@ export default {
 :deep(.leaflet-control-attribution) {
   display: none !important;
 }
-</style>
 
+/* Sidebar transitions */
+.sidebar {
+  transition: transform 0.3s ease-in-out;
+}
+</style>
