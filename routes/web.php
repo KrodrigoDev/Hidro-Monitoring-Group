@@ -42,3 +42,11 @@ Route::get("/password-reset-success", function () {
     return view("password-reset-success");
 })->name("password.reset.success");
 
+// Rotas para Dashboard e Generate Report
+Route::get("/dashboard", function () {
+    return view("dashboard");
+})->name("dashboard");
+
+Route::get("/generate-report", function () {
+    return view("generate-report");
+})->name("generate.report");
