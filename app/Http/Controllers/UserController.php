@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Routing\Controller;
 
 class UserController extends Controller
 {
@@ -11,9 +12,9 @@ class UserController extends Controller
     {
         // Para fins de demonstração do frontend, estou simulando alguns usuários.
         $users = collect([
-            (object) ["id" => 1, "name" => "Alice Silva", "email" => "alice@example.com", "role" => "admin", "status" => true, "created_at" => now()->subDays(10)],
-            (object) ["id" => 2, "name" => "Bruno Costa", "email" => "bruno@example.com", "role" => "user", "status" => true, "created_at" => now()->subDays(5)],
-            (object) ["id" => 3, "name" => "Carla Dias", "email" => "carla@example.com", "role" => "user", "status" => false, "created_at" => now()->subDays(20)],
+            (object) ["id" => 1, "name" => "Alice Silva", "email" => "alice@example.com", "cpf" => "123.456.789-00", "birth_date" => "1990-01-01", "company" => "Empresa Exemplo", "role" => "admin", "status" => true, "created_at" => now()->subDays(10)],
+            (object) ["id" => 2, "name" => "Bruno Costa", "email" => "bruno@example.com", "cpf" => "987.654.321-00", "birth_date" => "1985-05-15", "company" => "Empresa Exemplo", "role" => "user", "status" => true, "created_at" => now()->subDays(5)],
+            (object) ["id" => 3, "name" => "Carla Dias", "email" => "carla@example.com", "cpf" => "111.222.333-44", "birth_date" => "2000-12-30", "company" => "Empresa Exemplo", "role" => "user", "status" => false, "created_at" => now()->subDays(20)],
         ]);
 
         // Simular paginação para a view
@@ -24,12 +25,13 @@ class UserController extends Controller
             "path" => request()->url(), "query" => request()->query()
         ]);
 
-        return view("users.user-management", compact("users"));
+        // Retorna a nova view Vue.js em vez da view Blade anterior
+        return view("users", compact("users"));
     }
 
     public function create()
     {
-        return view("users.create");
+        return view("auth.users.create");
     }
 
     public function store(Request $request)
@@ -42,8 +44,17 @@ class UserController extends Controller
     public function edit(string $id)
     {
         // Simular a busca de um usuário para edição.
-        $user = (object) ["id" => $id, "name" => "Usuário de Teste", "email" => "teste@example.com", "role" => "user", "status" => true];
-        return view("users.edit", compact("user"));
+        $user = (object) [
+            "id" => $id,
+            "name" => "Usuário de Teste",
+            "email" => "teste@example.com",
+            "cpf" => "000.000.000-00",
+            "birth_date" => "2000-01-01",
+            "company" => "Empresa Teste",
+            "role" => "user",
+            "status" => true
+        ];
+        return view("auth.users.edit", compact("user"));
     }
 
     public function update(Request $request, string $id)

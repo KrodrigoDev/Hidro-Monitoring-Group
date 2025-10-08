@@ -10,6 +10,9 @@ import EquipmentManagementPage from './components/EquipmentManagementPage.vue';
 import ForgotPasswordPage from './components/ForgotPasswordPage.vue';
 import ResetPasswordPage from './components/ResetPasswordPage.vue';
 import PasswordResetSuccessPage from './components/PasswordResetSuccessPage.vue';
+import DashboardPage from './components/DashboardPage.vue';
+import GenerateReportPage from './components/GenerateReportPage.vue';
+import UserManagementPage from './components/UserManagementPage.vue';
 
 const app = createApp({});
 
@@ -20,6 +23,9 @@ app.component('equipment-management-page', EquipmentManagementPage);
 app.component('forgot-password-page', ForgotPasswordPage);
 app.component('reset-password-page', ResetPasswordPage);
 app.component('password-reset-success-page', PasswordResetSuccessPage);
+app.component('dashboard-page', DashboardPage);
+app.component('generate-report-page', GenerateReportPage);
+app.component('user-management-page', UserManagementPage);
 
 // Montar a aplicação se o elemento #app existir
 const appElement = document.getElementById('app');
