@@ -3,35 +3,42 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
-// Rota para a página de login
 Route::get("/", function () {
     return view("auth.login");
 })->name("login");
 
-// Rotas para gerenciamento de usuários
+Route::get("/register", function () {
+    return view("auth.register");
+})->name("register"); 
+
 Route::resource("users", UserController::class);
 
 // Rota adicional para o toggle de status
 Route::patch("users/{user}/toggle", [UserController::class, "toggle"])->name("users.toggle");
-
-// Rota para recuperação de senha
-Route::get('/esqueci-senha', function () {
-    return view('auth.forgot-password');
-});
-
-// Rota para redefinição de senha
-Route::get('/redefinir-senha', function () {
-    return view('auth.reset-password');
-});
-
-Route::get("/suporte", function () {
+// Rotas para as telas Vue.js
+Route::get("/support", function () {
     return view("support");
 })->name("support");
 
-Route::get("/historico-de-equipamento", function () {
+Route::get("/equipment-history", function () {
     return view("equipment-history");
 })->name("equipment.history");
 
-Route::get("/gestao-de-equipamentos", function () {
+Route::get("/equipment-management", function () {
     return view("equipment-management");
 })->name("equipment.management");
+
+
+// Rotas para recuperação de senha
+Route::get("/forgot-password", function () {
+    return view("forgot-password");
+})->name("password.request");
+
+Route::get("/reset-password", function () {
+    return view("reset-password");
+})->name("password.reset");
+
+Route::get("/password-reset-success", function () {
+    return view("password-reset-success");
+})->name("password.reset.success");
+
