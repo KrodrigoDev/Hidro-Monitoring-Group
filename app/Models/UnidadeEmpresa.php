@@ -12,6 +12,8 @@ class UnidadeEmpresa extends Model
     protected $table = 'unidade_empresa';
 
     protected $fillable = [
+        'id',
+        'nome',
         'municipio_id',
         'empresa_id',
     ];
